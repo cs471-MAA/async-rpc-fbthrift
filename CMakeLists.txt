@@ -32,43 +32,14 @@ include(dep/if/CMakeLists.txt)
 include_directories(dep)
 
 add_executable(
-  example_server
+		main
 
-  server/EchoService.h
-  server/EchoService.cpp
-  server/ChatRoomService.h
-  server/ChatRoomService.cpp
-  server/ExampleServer.cpp
+		main.cc
 )
 target_link_libraries(
-    example_server
+		main
 
-    chatroom-cpp2
-    FBThrift::thriftcpp2
-)
-
-add_executable(
-  chatroom_client
-
-  client/ChatRoomClient.cpp
-)
-target_link_libraries(
-  chatroom_client
-
-  chatroom-cpp2
-        atomic
-        FBThrift::thriftcpp2
-)
-
-add_executable(
-  echo_client
-  client/EchoClient.cpp
-        dep/perf/cpp2/util/Util.cpp
-)
-target_link_libraries(
-  echo_client
-
-  chatroom-cpp2
-        atomic
-        FBThrift::thriftcpp2
+		example-cpp2
+		atomic
+		FBThrift::thriftcpp2
 )

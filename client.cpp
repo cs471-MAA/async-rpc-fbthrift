@@ -1,30 +1,29 @@
-#include <stdio.h>
+//
+// Created by adrien on 06.11.21.
+//
 #include <glog/logging.h>
 #include <folly/init/Init.h>
-#include <folly/portability/GFlags.h>
 #include <thrift/lib/cpp2/server/ThriftServer.h>
 #include <folly/futures/Future.h>
 #include <folly/Unit.h>
 #include <folly/executors/ThreadedExecutor.h>
 #include <folly/synchronization/Baton.h>
-#include <thrift/lib/cpp2/async/HeaderClientChannel.h>
 #include <thrift/lib/cpp2/async/RocketClientChannel.h>
 #include <vector>
 #include "./ExampleHandler.h"
+#include "shared.h"
 
 
 using apache::thrift::ThriftServer;
 using apache::thrift::ThriftServerAsyncProcessorFactory;
 using apache::thrift::RequestCallback;
 using apache::thrift::ClientReceiveState;
-using apache::thrift::HeaderClientChannel;
 using apache::thrift::RocketClientChannel;
 using folly::AsyncSocket;
 using folly::ThreadedExecutor;
-using tamvm::cpp2::ExampleHandler;
-using tamvm::cpp2::ExampleServiceAsyncClient;
+using example::ExampleHandler;
+using example::ExampleServiceAsyncClient;
 
-constexpr std::int32_t thrift_port = 12999;
 
 folly::AsyncTransport::UniquePtr getSocket(folly::EventBase *evb, folly::SocketAddress const &addr) {
     folly::AsyncTransport::UniquePtr sock(new AsyncSocket(evb, addr, 120, true));
@@ -38,42 +37,6 @@ static std::unique_ptr<ExampleServiceAsyncClient> newRocketClient(folly::EventBa
     return std::make_unique<ExampleServiceAsyncClient>(std::move(channel));
 }
 
-std::unique_ptr<ThriftServer> newServer(int32_t port) {
-    auto handler = std::make_shared<ExampleHandler>();
-    auto proc_factory =
-            std::make_shared<ThriftServerAsyncProcessorFactory<ExampleHandler>>(
-                    handler);
-    auto server = std::make_unique<ThriftServer>();
-    // server->setAddress(addr);
-    server->setPort(port);
-    server->setProcessorFactory(proc_factory);
-    return server;
-}
-
-// class AsyncCallback : public apache::thrift::RequestCallback {
-//  public:
-//  	AsyncCallback(ClientReceiveState* result, folly::Baton<>* baton)
-//  		: result_(result), baton_(baton) {}
-//  	void requestSent() override {
-//  		LOG(INFO) << "client: requestSent";
-//  	}
-
-// 	void replyReceived(ClientReceiveState&& state) override {
-// 		LOG(INFO) << "client: replyReceived";
-// 		*result_ = std::move(state);
-// 		baton_->post();
-// 	}
-
-// 	void requestError(ClientReceiveState&& state) override {
-// 		LOG(ERROR) << "client: requestError";		
-// 		*result_ = std::move(state);
-// 		LOG(ERROR) << "exception: " << result_->exception();
-// 		baton_->post();
-// 	}
-//   private:
-//   	folly::Baton<>* baton_;
-//   	ClientReceiveState* result_;
-// };
 void onReply(int32_t number) {
     LOG(INFO) << "client: get response " << number;
 }
@@ -83,25 +46,12 @@ void onError(std::exception const &e) {
 }
 
 int main(int argc, char *argv[]) {
-    LOG(INFO) << "Starting test ...";
-    FLAGS_logtostderr = 1;
-    folly::init(&argc, &argv);
-
-    // starting server on a separate thread
-    std::thread server_thread([] {
-        auto server = newServer(thrift_port);
-        LOG(INFO) << "server: starts";
-        server->serve();
-    });
-    server_thread.detach();
-
-    // wait for a short while
-    // enough for socket opening
-    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    LOG(INFO) << "Starting Client ...";
 
     // create event runloop, to run on this thread
     folly::EventBase eb;
     folly::SocketAddress addr("127.0.0.1", thrift_port);
+
     // creating client
     auto client = newRocketClient(&eb, addr);
     std::vector<folly::Future<folly::Unit>> futs;

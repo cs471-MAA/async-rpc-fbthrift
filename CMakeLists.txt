@@ -32,12 +32,25 @@ include(dep/if/CMakeLists.txt)
 include_directories(dep)
 
 add_executable(
-		main
+		server
 
-		main.cc
+		server.cpp
 )
 target_link_libraries(
-		main
+		server
+
+		example-cpp2
+		atomic
+		FBThrift::thriftcpp2
+)
+
+add_executable(
+		client
+
+		client.cpp
+)
+target_link_libraries(
+		client
 
 		example-cpp2
 		atomic

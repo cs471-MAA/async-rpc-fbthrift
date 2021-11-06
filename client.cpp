@@ -46,6 +46,8 @@ void onError(std::exception const &e) {
 }
 
 int main(int argc, char *argv[]) {
+    google::InitGoogleLogging(argv[0]);
+    google::SetCommandLineOption("GLOG_minloglevel", "0"); // INFO
     LOG(INFO) << "Starting Client ...";
 
     // create event runloop, to run on this thread
@@ -55,14 +57,15 @@ int main(int argc, char *argv[]) {
     // creating client
     auto client = newRocketClient(&eb, addr);
     std::vector<folly::Future<folly::Unit>> futs;
-    for (int32_t i = 10; i < 14; i++) {
-        LOG(INFO) << "client: send number " << i;
+    for (int32_t i = 10; i < 100000; i++) {
+        //LOG(INFO) << "client: send number " << i;
+
         auto f = client->future_get_number(i);
         futs.push_back(std::move(f).thenValue(onReply).thenError<std::exception>(onError));
     }
     folly::ThreadedExecutor executor;
     std::move(collectAll(futs.begin(), futs.end())).via(&executor).thenValue([&eb](std::vector<folly::Try<folly::Unit>> &&v) {
-        LOG(INFO) << "client: received all responses";
+        LOG(ERROR) << "client: received all responses";
         eb.terminateLoopSoon();
     });
 

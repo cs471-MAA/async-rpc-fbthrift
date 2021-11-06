@@ -35,17 +35,8 @@ int main(int argc, char *argv[]) {
     FLAGS_logtostderr = 1;
     folly::init(&argc, &argv);
 
-    // starting server on a separate thread
-    std::thread server_thread([] {
-        folly::SocketAddress addr("127.0.0.1", thrift_port);
-        auto server = newServer(addr);
-        LOG(INFO) << "server: starts";
-        server->serve();
-    });
-
-    server_thread.detach();
-    while(true){
-        std::this_thread::sleep_for(std::chrono::milliseconds(150));
-    }
-    return 0;
+    folly::SocketAddress addr("127.0.0.1", thrift_port);
+    auto server = newServer(addr);
+    LOG(INFO) << "server: starts";
+    server->serve();
 }

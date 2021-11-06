@@ -19,7 +19,7 @@ cmake_minimum_required(VERSION 3.20)
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake_module")
 
 find_package(gflags REQUIRED)
-find_package(proxygen REQUIRED)
+#find_package(proxygen REQUIRED)
 find_package(FBThrift REQUIRED)
 find_package(Folly REQUIRED)
 find_package(Wangle REQUIRED)

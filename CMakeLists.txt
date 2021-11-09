@@ -15,7 +15,7 @@ set(CMAKE_CXX_STANDARD 17)
 PROJECT(ThriftTransport_CPP2_Example CXX)
 # set(CMAKE_VERBOSE_MAKEFILE ON)
 
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.16)
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake_module")
 
 find_package(gflags REQUIRED)

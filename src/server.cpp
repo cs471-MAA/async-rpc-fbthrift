@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     FLAGS_logtostderr = 1;
     folly::init(&argc, &argv);
 
-    folly::SocketAddress addr("127.0.0.1", thrift_port);
+    folly::SocketAddress addr("server", thrift_port);
     auto server = newServer(addr);
     LOG(INFO) << "server: starts";
     server->serve();

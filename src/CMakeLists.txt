@@ -43,6 +43,7 @@ target_link_libraries(
 		atomic
 		FBThrift::thriftcpp2
 )
+install(TARGETS server DESTINATION /usr/bin/)
 
 add_executable(
 		client
@@ -56,3 +57,4 @@ target_link_libraries(
 		atomic
 		FBThrift::thriftcpp2
 )
+install(TARGETS client DESTINATION /usr/bin/)

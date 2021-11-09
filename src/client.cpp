@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 
     // create event runloop, to run on this thread
     folly::EventBase eb;
-    folly::SocketAddress addr("server", thrift_port);
+    folly::SocketAddress addr("server", thrift_port, true);
 
     // creating client
     auto client = newRocketClient(&eb, addr);

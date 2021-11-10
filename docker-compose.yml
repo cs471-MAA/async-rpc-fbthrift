@@ -1,18 +1,26 @@
 version: "3.9"
 services:
-    server:
-        image: saheru/fbthrift-benchmark
-        hostname: server
+    # server:
+    #     image: saheru/fbthrift-benchmark
+    #     hostname: server
+    #     ports:
+    #         - 12999:12999
+    #     restart: always
+    #     entrypoint: server
+
+    # client:
+    #     image: saheru/fbthrift-benchmark
+    #     hostname: client
+    #     restart: always
+    #     entrypoint: client
+    #     depends_on:
+    #         - server
+
+    frontend-server:
+        image: frontend-server
+        hostname: frontend-server
         ports:
-            - 12999:12999
-        restart: always
-        entrypoint: server
-
-    client:
-        image: saheru/fbthrift-benchmark
-        hostname: client
-        restart: always
-        entrypoint: client
-        depends_on:
-            - server
-
+            - 8080:8080
+        # restart: always
+        volumes:
+            - ./frontend-server/server.py:/app/server.py

@@ -20,8 +20,8 @@ set(EXAMPLE_IF_HOME ${CMAKE_CURRENT_SOURCE_DIR}/dep/if)
 include(/usr/local/include/thrift/ThriftLibrary.cmake)
 # Example to test linking
 thrift_library(
-  "example" #file_name
-  "ExampleService" #services
+  "mock_message_board" #file_name
+  "MockMessageBoard" #services
   "cpp2" #language
   "" #options
   "${EXAMPLE_IF_HOME}" #file_path

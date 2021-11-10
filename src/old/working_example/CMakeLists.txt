@@ -29,9 +29,32 @@ find_package(Threads REQUIRED)
 find_library(atomic-lib atomic)
 
 include(dep/if/CMakeLists.txt)
+include_directories(dep)
 
-add_subdirectory(MessageService)
-add_subdirectory(MockDatabase)
-add_subdirectory(SanitizationService)
-add_subdirectory(Client)
+add_executable(
+		server
 
+		server.cpp
+)
+target_link_libraries(
+		server
+
+		example-cpp2
+		atomic
+		FBThrift::thriftcpp2
+)
+install(TARGETS server DESTINATION /usr/bin/)
+
+add_executable(
+		client
+
+		client.cpp
+)
+target_link_libraries(
+		client
+
+		example-cpp2
+		atomic
+		FBThrift::thriftcpp2
+)
+install(TARGETS client DESTINATION /usr/bin/)

@@ -48,10 +48,14 @@ int main(int argc, char *argv[]) {
     string message = (argc > ++i) ? argv[i] : "";
     // create event runloop, to run on this thread
     folly::EventBase eb;
+
     // folly::SocketAddress addr("mock-database", 10001, true);
     // folly::SocketAddress addr("mock-database-middle", 10011, true);
-    folly::SocketAddress addr("127.0.0.1", 10001, true);
+    // folly::SocketAddress addr("127.0.0.1", 10001, true);
     // folly::SocketAddress addr("127.0.0.1", 10011, true);
+
+    // folly::SocketAddress addr("message-service", 10002, true);
+    folly::SocketAddress addr("127.0.0.1", 10002, true);
 
     // creating client
     auto client = newMockDatabaseRocketClient(&eb, addr);

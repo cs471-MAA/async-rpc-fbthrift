@@ -1,14 +1,15 @@
 
 add_executable(
-		MessageService
+		MessageServiceServer
 
 		MessageServiceServer.cpp
 		MessageService.cpp
+		../shared/Utils.cpp
 )
 target_link_libraries(
-		MessageService
+		MessageServiceServer
 
-		example-cpp2
+		mock_message_board-cpp2
 		atomic
 		FBThrift::thriftcpp2
 )

@@ -6,24 +6,25 @@
 #include "MessageService.h"
 
 void mock_message_board::MessageServiceHandler::find_last_message(::std::string& result, std::unique_ptr<::std::string> client_id) {
+    folly::EventBase eb;
+    std::unique_ptr<MockDatabaseAsyncClient> client = newMockDatabaseRocketClient(&eb, addr);
+    client->sync_find_last_message(result, *client_id);
 
-    folly::EventBase *eb = getEventBase();
-    folly::SocketAddress addr("mock-database", 10001, true);
-
-    // creating client
-    auto client = newMockDatabaseRocketClient(&eb, addr);
-
-    client->find_last_message("Albert");
 }
 
 bool mock_message_board::MessageServiceHandler::send_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) {
-    return false;
+    bool ret_val;
+    folly::EventBase eb;
+    std::unique_ptr<MockDatabaseAsyncClient> client = newMockDatabaseRocketClient(&eb, addr);
+    ret_val = client->sync_store_message(*client_id, *message);
+
+    return ret_val;
 }
 
-mock_message_board::MessageServiceHandler::MessageServiceHandler(bool test) : bidule(test) {
-
+mock_message_board::MessageServiceHandler::MessageServiceHandler() : clientLoopThread_(new folly::ScopedEventBaseThread())  {
+    addr = folly::SocketAddress("127.0.0.1", 10001, true);
 }
 
 mock_message_board::MessageServiceHandler::~MessageServiceHandler() {
-
+    delete clientLoopThread_;
 }

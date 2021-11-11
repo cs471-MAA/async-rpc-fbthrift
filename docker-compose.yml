@@ -9,13 +9,13 @@ services:
     #     depends_on:
     #         - server
     
-    mock-client:
-        image: saheru/fbthrift-benchmark
-        hostname: client
-        # restart: always
-        command: ["./src/build/MockDatabase/MockDatabaseClient"]
-        depends_on:
-            - mock-database
+    # mock-client:
+    #     image: saheru/fbthrift-benchmark
+    #     hostname: client
+    #     # restart: always
+    #     command: ["./src/build/MockDatabase/MockDatabaseClient"]
+    #     depends_on:
+    #         - mock-database
 
     mock-database:
         image: saheru/fbthrift-benchmark

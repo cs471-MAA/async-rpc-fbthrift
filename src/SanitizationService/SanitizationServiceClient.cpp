@@ -40,9 +40,9 @@ static std::unique_ptr<SanitizationServiceAsyncClient> newRocketClient(folly::Ev
 
 void onReply(bool response) {
     if (response)
-        LOG(INFO) << "client: get response: true";
+        LOG(ERROR) << "client: get response: true";
     else
-        LOG(INFO) << "client: get response: false";
+        LOG(ERROR) << "client: get response: false";
 }
 
 void onError(std::exception const &e) {
@@ -58,6 +58,11 @@ int main(int argc, char *argv[]) {
     folly::EventBase eb;
     folly::SocketAddress addr("sanitization-service", 10002, true);
 
+    // test messages
+    const string messages[5] = {
+        "Test message", "Test messa$ge", "Test* message", "Test mess\\age", "Hello! :')"
+    };
+
     // creating client
     auto client = newMockDatabaseRocketClient(&eb, addr);
     std::vector<folly::Future<folly::Unit>> futs;
@@ -65,7 +70,7 @@ int main(int argc, char *argv[]) {
         auto start = std::chrono::system_clock::now();
 
         LOG(INFO) << "client: sending call " << i;
-        auto f = client->future_sanitize_message("client-1", "Test message");
+        auto f = client->future_sanitize_message("client-1", messages[i]);
         futs.push_back(std::move(f).thenValue(onReply).thenError<std::exception>(onError));
         LOG(INFO) << "client: sent call " << i;
         

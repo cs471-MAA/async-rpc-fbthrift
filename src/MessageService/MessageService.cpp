@@ -14,7 +14,7 @@ void mock_message_board::MessageServiceHandler::find_last_message(::std::string&
 bool mock_message_board::MessageServiceHandler::send_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) {
     bool ret_val;
     folly::EventBase eb;
-    std::unique_ptr<newSanitizationServiceRocketClient> client = newSanitizationServiceRocketClient(&eb, addr2);
+    std::unique_ptr<SanitizationServiceAsyncClient> client = newSanitizationServiceRocketClient(&eb, addr2);
     ret_val = client->sync_sanitize_message(*client_id, *message);
 
     return ret_val;

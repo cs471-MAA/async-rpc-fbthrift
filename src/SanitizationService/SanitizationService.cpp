@@ -9,7 +9,6 @@
 bool mock_message_board::SanitizationHandler::sanitize_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) {
     std::regex match_expr("^.*[\\/*$^].*$");
     if (std::regex_match(*message, match_expr)) {
-        LOG(INFO) << "server: message is invalid";
         return false;
     }
 

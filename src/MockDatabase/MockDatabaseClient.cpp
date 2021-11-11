@@ -2,12 +2,10 @@
 // Created by adrien on 06.11.21.
 //
 #include <glog/logging.h>
-#include <folly/init/Init.h>
 #include <thrift/lib/cpp2/server/ThriftServer.h>
 #include <folly/futures/Future.h>
 #include <folly/Unit.h>
 #include <folly/executors/ThreadedExecutor.h>
-#include <folly/synchronization/Baton.h>
 #include <thrift/lib/cpp2/async/RocketClientChannel.h>
 #include <vector>
 #include <string>
@@ -15,6 +13,7 @@
 #include <ctime>
 
 #include "MockDatabaseHandler.h"
+#include "Utils.h"
 
 
 using apache::thrift::ThriftServer;
@@ -27,18 +26,6 @@ using folly::ThreadedExecutor;
 using mock_message_board::MockDatabaseHandler;
 using mock_message_board::MockDatabaseAsyncClient;
 using namespace std;
-
-folly::AsyncTransport::UniquePtr getSocket(folly::EventBase *evb, folly::SocketAddress const &addr) {
-    folly::AsyncTransport::UniquePtr sock(new AsyncSocket(evb, addr, 120, true));
-    return sock;
-}
-
-static std::unique_ptr<MockDatabaseAsyncClient> newRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr) {
-
-    auto channel = RocketClientChannel::newChannel(getSocket(evb, addr));
-    channel->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);
-    return std::make_unique<MockDatabaseAsyncClient>(std::move(channel));
-}
 
 void onReply(string message) {
     LOG(INFO) << "client: get response " << message;

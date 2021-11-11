@@ -14,3 +14,10 @@ std::unique_ptr<MockDatabaseAsyncClient> newMockDatabaseRocketClient(folly::Even
     channel->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);
     return std::make_unique<MockDatabaseAsyncClient>(std::move(channel));
 }
+
+std::unique_ptr<SanitizationServiceAsyncClient> newSanitizationServiceRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr) {
+
+    auto channel = RocketClientChannel::newChannel(folly::AsyncSocket::newSocket(evb, addr));
+    channel->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);
+    return std::make_unique<SanitizationServiceAsyncClient>(std::move(channel));
+}

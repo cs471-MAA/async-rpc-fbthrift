@@ -1,38 +1,29 @@
-#include <glog/logging.h>
-#include <folly/init/Init.h>
+//
+// Created by adrien on 11.11.21.
+//
 
-#include <thrift/lib/cpp2/server/ThriftServer.h>
-#include <folly/executors/ThreadedExecutor.h>
-#include <folly/synchronization/Baton.h>
-#include <thrift/lib/cpp2/async/RocketClientChannel.h>
-#include <string>
-#include "SanitizationHandler.h"
+#include <Utils.h>
+#include <regex>
+#include "SanitizationService.h"
 
-using apache::thrift::ThriftServer;
-using apache::thrift::ThriftServerAsyncProcessorFactory;
-using apache::thrift::RequestCallback;
-using apache::thrift::ClientReceiveState;
-using apache::thrift::RocketClientChannel;
-using folly::AsyncSocket;
-using folly::ThreadedExecutor;
-using mock_message_board::SanitizationHandler;
-using namespace std;
+bool mock_message_board::SanitizationHandler::sanitize_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) {
+    std::regex match_expr("^.*[\\/*$^].*$");
+    if (std::regex_match(*message, match_expr)) {
+        LOG(INFO) << "server: message is invalid";
+        return false;
+    }
 
-std::unique_ptr<ThriftServer> newServer(folly::SocketAddress const &addr) {
-    auto handler = std::make_shared<SanitizationHandler>();
-    auto proc_factory = std::make_shared<ThriftServerAsyncProcessorFactory<SanitizationHandler>>(handler);
-    auto server = std::make_unique<ThriftServer>();
-    server->setAddress(addr);
-    server->setProcessorFactory(proc_factory);
-    return server;
+    folly::EventBase eb;
+    std::unique_ptr<MockDatabaseAsyncClient> client = newMockDatabaseRocketClient(&eb, this->addr);
+    client->sync_store_message(*client_id, *message);
+
+    return true;
 }
 
-int main(int argc, char *argv[]) {
-    FLAGS_logtostderr = 1;
-    folly::init(&argc, &argv);
+mock_message_board::SanitizationHandler::SanitizationHandler() : clientLoopThread_(new folly::ScopedEventBaseThread())  {
+    addr = folly::SocketAddress("127.0.0.1", 10001, true); // mock database
+}
 
-    folly::SocketAddress addr("sanitization-service", 10002, true);
-    auto server = newServer(addr);
-    LOG(INFO) << "server: start";
-    server->serve();
+mock_message_board::SanitizationHandler::~SanitizationHandler() {
+    delete clientLoopThread_;
 }

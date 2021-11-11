@@ -11,5 +11,5 @@ service SanitizationService {
 
 service MockDatabase {
   string find_last_message(1: string client_id);
-  bool store_message(1: string client_id, 2: string message);
+  bool store_message(1:string client_id, 2:string message);
 }

@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 
     // create event runloop, to run on this thread
     folly::EventBase eb;
-    folly::SocketAddress addr("mock-database", 10001, true);
+    folly::SocketAddress addr("127.0.0.1", 10002, true);
 
     // creating client
     auto client = newMockDatabaseRocketClient(&eb, addr);

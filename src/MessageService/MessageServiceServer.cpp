@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
     folly::init(&argc, &argv);
 
     folly::SocketAddress addr("127.0.0.1", 10002, true);
-    auto server = newServer(addr, std::make_shared<MessageServiceHandler>(true));
+    auto server = newServer(addr, std::make_shared<MessageServiceHandler>());
     server->serve();
 
     return 0;

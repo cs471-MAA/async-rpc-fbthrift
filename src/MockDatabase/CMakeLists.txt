@@ -31,6 +31,7 @@ add_executable(
 	MockDatabaseClient
 
 	MockDatabaseClient.cpp
+	../shared/Utils.cpp
 )
 target_link_libraries(
 	MockDatabaseClient

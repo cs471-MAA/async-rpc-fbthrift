@@ -8,12 +8,12 @@
 void mock_message_board::MessageServiceHandler::find_last_message(::std::string& result, std::unique_ptr<::std::string> client_id) {
 
     folly::EventBase *eb = getEventBase();
-    folly::SocketAddress addr("mock-database", 10001, true);
+    folly::SocketAddress addr("127.0.0.1", 10001, true);
 
     // creating client
-    auto client = newMockDatabaseRocketClient(&eb, addr);
+    auto client = newMockDatabaseRocketClient(eb, addr);
 
-    client->find_last_message("Albert");
+    client->sync_find_last_message(result, *client_id);
 }
 
 bool mock_message_board::MessageServiceHandler::send_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) {

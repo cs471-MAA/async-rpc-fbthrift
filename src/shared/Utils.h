@@ -1,30 +1,22 @@
 //
 // Created by adrien on 11.11.21.
 //
+#pragma once
+
 #include <folly/io/async/AsyncSocket.h>
 #include <thrift/lib/cpp2/server/ThriftServer.h>
-#include <thrift/lib/cpp2/async/RocketClientChannel.h>
 #include "if/gen-cpp2/MockDatabase.h"
 
 using folly::AsyncSocket;
 using apache::thrift::ThriftServer;
-using apache::thrift::ThriftServerAsyncProcessorFactory;
-using apache::thrift::RocketClientChannel;
 using mock_message_board::MockDatabaseAsyncClient;
+using apache::thrift::ThriftServerAsyncProcessorFactory;
 
 using namespace std;
 
-folly::AsyncTransport::UniquePtr getSocket(folly::EventBase *evb, folly::SocketAddress const &addr) {
-    folly::AsyncTransport::UniquePtr sock(new AsyncSocket(evb, addr, 120, true));
-    return sock;
-}
+folly::AsyncTransport::UniquePtr getSocket(folly::EventBase *evb, folly::SocketAddress const &addr);
 
-std::unique_ptr<MockDatabaseAsyncClient> newMockDatabaseRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr) {
-
-    auto channel = RocketClientChannel::newChannel(getSocket(evb, addr));
-    channel->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);
-    return std::make_unique<MockDatabaseAsyncClient>(std::move(channel));
-}
+std::unique_ptr<MockDatabaseAsyncClient> newMockDatabaseRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr);
 
 template <typename T>
 std::unique_ptr<ThriftServer> newServer(folly::SocketAddress const &addr, shared_ptr<T> handler) {

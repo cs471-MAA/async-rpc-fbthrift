@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     FLAGS_logtostderr = 1;
     folly::init(&argc, &argv);
 
-    folly::SocketAddress addr("mock-database", 10001, true);
+    folly::SocketAddress addr("127.0.0.1", 10001, true);
     auto server = newServer(addr, std::make_shared<MockDatabaseHandler>());
     LOG(INFO) << "server: starts";
     server->serve();

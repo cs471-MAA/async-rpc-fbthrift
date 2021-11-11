@@ -8,6 +8,7 @@ namespace mock_message_board {
         ~MessageServiceHandler() override;
 
         void find_last_message(::std::string& result, std::unique_ptr<::std::string> client_id) override;
+
         bool send_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) override;
     private:
         bool bidule;

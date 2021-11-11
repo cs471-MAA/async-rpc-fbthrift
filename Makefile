@@ -1,2 +1,2 @@
 build-docker:
-	docker build -t saheru/fbthrift-benchmark .
+	docker build -m 4G -t saheru/fbthrift-benchmark .

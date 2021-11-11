@@ -33,7 +33,7 @@ include(dep/if/CMakeLists.txt)
 include_directories(dep)
 
 # add_subdirectory(MessageService)
-add_subdirectory(MockDatabase)
-# add_subdirectory(SanitizationService)
+# add_subdirectory(MockDatabase)
+add_subdirectory(SanitizationService)
 # add_subdirectory(Client)
 

@@ -13,7 +13,6 @@
 #include <ctime>
 #include <iostream>
 
-#include "MockDatabaseHandler.h"
 #include "Utils.h"
 
 
@@ -24,12 +23,15 @@ using apache::thrift::ClientReceiveState;
 using apache::thrift::RocketClientChannel;
 using folly::AsyncSocket;
 using folly::ThreadedExecutor;
-using mock_message_board::MockDatabaseHandler;
-using mock_message_board::MockDatabaseAsyncClient;
 using namespace std;
 
 void onReply(string message) {
     LOG(INFO) << "client: get response " << message;
+}
+
+
+void onStoreReply(bool resp) {
+    LOG(INFO) << "client: get response " << resp;
 }
 
 void onError(std::exception const &e) {
@@ -45,7 +47,7 @@ int main(int argc, char *argv[]) {
     int iterations = (argc > ++i) ? stoi(argv[i]) : 5;
     iterations = (iterations > 0) ? iterations : 5;
     string client_id = (argc > ++i) ? argv[i] : "Albert";
-    string message = (argc > ++i) ? argv[i] : "";
+    string message = (argc > ++i) ? argv[i] : "TEST MESSAGE";
     // create event runloop, to run on this thread
     folly::EventBase eb;
 
@@ -58,7 +60,7 @@ int main(int argc, char *argv[]) {
     folly::SocketAddress addr("127.0.0.1", 10002, true);
 
     // creating client
-    auto client = newMockDatabaseRocketClient(&eb, addr);
+    auto client = newMessageServiceRocketClient(&eb, addr);
     auto start = std::chrono::system_clock::now();
     std::vector<folly::Future<folly::Unit>> futs;
     for (int32_t i = 0; i < iterations; i++) {
@@ -67,13 +69,13 @@ int main(int argc, char *argv[]) {
         cout << "client: sending call " << i << endl;
 
         // ---------- ASYNC ------------
-        // if (message.length() > 0){
+        if (i % 2 == 1){
             auto f = client->future_find_last_message(client_id);
             futs.push_back(std::move(f).thenValue(onReply).thenError<std::exception>(onError));
-        // } else {
-            // auto f = client->future_store_message(client_id, message);
-            // futs.push_back(std::move(f).thenValue(onStoreReply).thenError<std::exception>(onStoreError));
-        // }
+        } else {
+            auto f = client->future_send_message(client_id, message);
+            futs.push_back(std::move(f).thenValue(onStoreReply).thenError<std::exception>(onError));
+        }
         // ---------- SYNC ------------
         // string result; 
         // client->sync_find_last_message(result, "Albert");

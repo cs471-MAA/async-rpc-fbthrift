@@ -21,3 +21,10 @@ std::unique_ptr<SanitizationServiceAsyncClient> newSanitizationServiceRocketClie
     channel->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);
     return std::make_unique<SanitizationServiceAsyncClient>(std::move(channel));
 }
+
+std::unique_ptr<MessageServiceAsyncClient> newMessageServiceRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr) {
+
+    auto channel = RocketClientChannel::newChannel(folly::AsyncSocket::newSocket(evb, addr));
+    channel->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);
+    return std::make_unique<MessageServiceAsyncClient>(std::move(channel));
+}

@@ -9,32 +9,43 @@ services:
     #     depends_on:
     #         - server
     
-    # mock-client:
-    #     image: saheru/fbthrift-benchmark
-    #     hostname: client
-    #     # restart: always
-    #     command: ["./src/build/MockDatabase/MockDatabaseClient"]
-    #     depends_on:
-    #         - mock-database
+    mock-client:
+        image: saheru/fbthrift-benchmark
+        hostname: mock-client
+        restart: always
+        command: ["./src/build/MockDatabase/MockDatabaseClient"]
+        
+        depends_on:
+            # - mock-database
+            - mock-database-middle
 
+    mock-database-middle:
+        image: saheru/fbthrift-benchmark
+        hostname: mock-database-middle
+        ports:
+            - 10011:10011
+        command: ["./src/build/MockDatabase/MockDatabaseMiddle"]
+        depends_on:
+            - mock-database
+    
     mock-database:
         image: saheru/fbthrift-benchmark
         hostname: mock-database
         ports:
             - 10001:10001
-        command: ["./src/build/MockDatabase/MockDatabase"]
+        command: ["./src/build/MockDatabase/MockDatabase"]    
     
-    sanitization-service:
-        image: saheru/fbthrift-benchmark
-        hostname: sanitization-service
-        ports:
-            - 10002:10002
-        command: ["./src/build/SanitizationService/SanitizationService"]
+    # sanitization-service:
+    #     image: saheru/fbthrift-benchmark
+    #     hostname: sanitization-service
+    #     ports:
+    #         - 10002:10002
+    #     command: ["./src/build/SanitizationService/SanitizationService"]
 
-    sanitization-service-client:
-        image: saheru/fbthrift-benchmark
-        hostname: client-1
-        # restart: always
-        command: ["./src/build/SanitizationService/SanitizationServiceClient"]
-        depends_on:
-            - sanitization-service
+    # sanitization-service-client:
+    #     image: saheru/fbthrift-benchmark
+    #     hostname: client-1
+    #     # restart: always
+    #     command: ["./src/build/SanitizationService/SanitizationServiceClient"]
+    #     depends_on:
+    #         - sanitization-service

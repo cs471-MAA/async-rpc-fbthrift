@@ -1,39 +1,37 @@
 version: "3.9"
 services:
-    
+
     mock-database:
         image: saheru/fbthrift-benchmark
         hostname: mock-database
         ports:
             - 10001:10001
         command: ["./src/build/MockDatabase/MockDatabase"]
-        # command: ["./src/build/MockDatabase/MockDatabase", 8, 8] 
-            
+
     sanitization-service:
         image: saheru/fbthrift-benchmark
         hostname: sanitization-service
         ports:
             - 10003:10003
-        command: ["./src/build/SanitizationService/SanitizationService"]
-        depends_on: 
+        command: ["./src/build/SanitizationService/SanitizationServiceServer"]
+        depends_on:
             - mock-database
-    
+
     message-service:
         image: saheru/fbthrift-benchmark
         hostname: message-service
         ports:
             - 10002:10002
-        command: ["./src/build/SanitizationService/MessageServiceServer"]
-        depends_on: 
+        command: ["./src/build/MessageService/MessageServiceServer"]
+        depends_on:
             - mock-database
             - sanitization-service
-    
+
     client:
         image: saheru/fbthrift-benchmark
         hostname: client
         restart: always
-        entrypoint: client
-        command: ["./src/build/SanitizationService/MessageServiceServer"]
+        command: ["./src/build/MockDatabase/MockDatabaseClient"]
         depends_on:
             - message-service
 
@@ -50,11 +48,11 @@ services:
     #     hostname: mock-client
     #     restart: always
     #     command: ["./src/build/MockDatabase/MockDatabaseClient"]
-        
+
     #     depends_on:
     #         # - mock-database
     #         - mock-database-middle
-   
+
     # mock-database-middle:
     #     image: saheru/fbthrift-benchmark
     #     hostname: mock-database-middle

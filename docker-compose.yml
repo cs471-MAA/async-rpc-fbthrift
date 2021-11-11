@@ -19,14 +19,14 @@ services:
             # - mock-database
             - mock-database-middle
 
-    mock-database-middle:
-        image: saheru/fbthrift-benchmark
-        hostname: mock-database-middle
-        ports:
-            - 10011:10011
-        command: ["./src/build/MockDatabase/MockDatabaseMiddle"]
-        depends_on:
-            - mock-database
+    # mock-database-middle:
+    #     image: saheru/fbthrift-benchmark
+    #     hostname: mock-database-middle
+    #     ports:
+    #         - 10011:10011
+    #     command: ["./src/build/MockDatabase/MockDatabaseMiddle"]
+    #     depends_on:
+    #         - mock-database
     
     mock-database:
         image: saheru/fbthrift-benchmark

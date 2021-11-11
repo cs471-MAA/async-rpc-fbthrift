@@ -69,21 +69,21 @@ int main(int argc, char *argv[]) {
     auto start = std::chrono::system_clock::now();
     std::vector<folly::Future<folly::Unit>> futs;
     for (int32_t i = 0; i < iterations; i++) {
-        
+
         // LOG(INFO) << "client: sending call " << i;
         cout << "client: sending call " << i << endl;
 
         #ifdef SYNC
-            string result; 
+            string result;
             client->sync_find_last_message(result, client_id);
         #else
-        // if (message.length() > 0){
+         if (i % 2 == 1){
             auto f = client->future_find_last_message(client_id);
             futs.push_back(std::move(f).thenValue(onReply).thenError<std::exception>(onError));
-        // } else {
-            // auto f = client->future_store_message(client_id, message);
-            // futs.push_back(std::move(f).thenValue(onStoreReply).thenError<std::exception>(onStoreError));
-        // }
+         } else {
+             auto f = client->future_send_message(client_id, message);
+             futs.push_back(std::move(f).thenValue(onStoreReply).thenError<std::exception>(onError));
+         }
         #endif
 
 
@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
         LOG(ERROR) << "client: received all responses";
         eb.terminateLoopSoon();
     });
-    
+
 
     // libevent/epoll loop which keeps main thread from existing.
     eb.loopForever();

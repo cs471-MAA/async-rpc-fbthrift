@@ -49,8 +49,11 @@ namespace mock_message_board {
             SanitizationHandler() {
                 // create event runloop, to run on this thread
                 folly::EventBase eb;
-                folly::SocketAddress addr("mock-database", 10001, true);
-
+                #ifdef LOCALHOST
+                    folly::SocketAddress addr("127.0.0.1", 10001, true);
+                #else
+                    folly::SocketAddress addr("mock-database", 10001, true);
+                #endif
                 // create client
                 this->client = newRocketClient(&eb, addr);
             }

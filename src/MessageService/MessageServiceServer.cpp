@@ -11,8 +11,11 @@ using mock_message_board::MessageServiceHandler;
 int main(int argc, char** argv) {
     FLAGS_logtostderr = 1;
     folly::init(&argc, &argv);
-
-    folly::SocketAddress addr("127.0.0.1", 10002, true);
+    #ifdef LOCALHOST
+        folly::SocketAddress addr("127.0.0.1", 10002, true);
+    #else
+        folly::SocketAddress addr("message-service", 10002, true);
+    #endif
     auto server = newServer(addr, std::make_shared<MessageServiceHandler>());
     server->serve();
 

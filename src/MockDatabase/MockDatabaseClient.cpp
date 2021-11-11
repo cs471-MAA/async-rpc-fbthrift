@@ -38,6 +38,8 @@ void onError(std::exception const &e) {
 
 
 int main(int argc, char *argv[]) {
+
+
     google::InitGoogleLogging(argv[0]);
     google::SetCommandLineOption("GLOG_minloglevel", "0"); // INFO
     LOG(INFO) << "Starting Client ...";
@@ -49,13 +51,16 @@ int main(int argc, char *argv[]) {
     // create event runloop, to run on this thread
     folly::EventBase eb;
 
-    // folly::SocketAddress addr("mock-database", 10001, true);
-    // folly::SocketAddress addr("mock-database-middle", 10011, true);
-    // folly::SocketAddress addr("127.0.0.1", 10001, true);
-    // folly::SocketAddress addr("127.0.0.1", 10011, true);
 
-    // folly::SocketAddress addr("message-service", 10002, true);
-    folly::SocketAddress addr("127.0.0.1", 10002, true);
+    #ifdef LOCALHOST
+        // folly::SocketAddress addr("127.0.0.1", 10001, true);
+        // folly::SocketAddress addr("127.0.0.1", 10011, true); //Middle
+        folly::SocketAddress addr("127.0.0.1", 10002, true);
+    #else
+        // folly::SocketAddress addr("mock-database", 10001, true);
+        // folly::SocketAddress addr("mock-database-middle", 10011, true);
+        folly::SocketAddress addr("message-service", 10002, true);
+    #endif
 
     // creating client
     auto client = newMockDatabaseRocketClient(&eb, addr);
@@ -66,7 +71,10 @@ int main(int argc, char *argv[]) {
         // LOG(INFO) << "client: sending call " << i;
         cout << "client: sending call " << i << endl;
 
-        // ---------- ASYNC ------------
+        #ifdef SYNC
+            string result; 
+            client->sync_find_last_message(result, "Albert");
+        #else
         // if (message.length() > 0){
             auto f = client->future_find_last_message(client_id);
             futs.push_back(std::move(f).thenValue(onReply).thenError<std::exception>(onError));
@@ -74,9 +82,7 @@ int main(int argc, char *argv[]) {
             // auto f = client->future_store_message(client_id, message);
             // futs.push_back(std::move(f).thenValue(onStoreReply).thenError<std::exception>(onStoreError));
         // }
-        // ---------- SYNC ------------
-        // string result; 
-        // client->sync_find_last_message(result, "Albert");
+        #endif
 
 
         LOG(INFO) << "client: sent call " << i;

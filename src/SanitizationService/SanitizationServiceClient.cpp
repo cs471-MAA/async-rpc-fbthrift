@@ -3,18 +3,13 @@
 //
 #include <glog/logging.h>
 #include <folly/init/Init.h>
-#include <thrift/lib/cpp2/server/ThriftServer.h>
-#include <folly/futures/Future.h>
-#include <folly/Unit.h>
-#include <folly/executors/ThreadedExecutor.h>
-#include <folly/synchronization/Baton.h>
-#include <thrift/lib/cpp2/async/RocketClientChannel.h>
 #include <vector>
 #include <string>
 #include <chrono>
 #include <ctime>
 
 #include <if/gen-cpp2/SanitizationService.h>
+#include "Utils.h"
 
 using apache::thrift::ThriftServer;
 using apache::thrift::ThriftServerAsyncProcessorFactory;
@@ -26,17 +21,17 @@ using folly::ThreadedExecutor;
 using mock_message_board::SanitizationServiceAsyncClient;
 using namespace std;
 
-folly::AsyncTransport::UniquePtr getSocket(folly::EventBase *evb, folly::SocketAddress const &addr) {
-    folly::AsyncTransport::UniquePtr sock(new AsyncSocket(evb, addr, 120, true));
-    return sock;
-}
+// folly::AsyncTransport::UniquePtr getSocket(folly::EventBase *evb, folly::SocketAddress const &addr) {
+//     folly::AsyncTransport::UniquePtr sock(new AsyncSocket(evb, addr, 120, true));
+//     return sock;
+// }
 
-static std::unique_ptr<SanitizationServiceAsyncClient> newRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr) {
+// static std::unique_ptr<SanitizationServiceAsyncClient> newRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr) {
 
-    auto channel = RocketClientChannel::newChannel(getSocket(evb, addr));
-    channel->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);
-    return std::make_unique<SanitizationServiceAsyncClient>(std::move(channel));
-}
+//     auto channel = RocketClientChannel::newChannel(getSocket(evb, addr));
+//     channel->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);
+//     return std::make_unique<SanitizationServiceAsyncClient>(std::move(channel));
+// }
 
 void onReply(bool response) {
     if (response)
@@ -56,7 +51,11 @@ int main(int argc, char *argv[]) {
 
     // create event runloop, to run on this thread
     folly::EventBase eb;
-    folly::SocketAddress addr("sanitization-service", 10002, true);
+    #ifdef LOCALHOST
+        folly::SocketAddress addr("127.0.0.1", 10002, true);
+    #else
+        folly::SocketAddress addr("sanitization-service", 10002, true);
+    #endif
 
     // test messages
     const string messages[5] = {

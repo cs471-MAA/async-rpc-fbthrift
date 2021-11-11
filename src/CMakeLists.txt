@@ -11,6 +11,23 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+option(SYNC "Will tend to create a code for a synchronous execution." OFF)
+if(SYNC)
+  add_definitions(-DSYNC)
+  message(STATUS
+        "The code will be compiled with the SYNC flags"
+      )
+endif()
+
+option(LOCALHOST "Will tend to create a code for a synchronous execution." OFF)
+if(LOCALHOST)
+  add_definitions(-DLOCALHOST)
+  message(STATUS
+        "The code will be compiled with localhost."
+      )
+endif()
+
+
 set(CMAKE_CXX_STANDARD 17)
 PROJECT(ThriftTransport_CPP2_Example CXX)
 # set(CMAKE_VERBOSE_MAKEFILE ON)

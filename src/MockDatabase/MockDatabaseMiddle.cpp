@@ -36,9 +36,11 @@ int main(int argc, char *argv[]) {
     LOG(INFO) << "Starting Middle ...";
     // FLAGS_logtostderr = 1;
     folly::init(&argc, &argv);
-
-    folly::SocketAddress addr("mock-database-middle", 10011, true);
-    // folly::SocketAddress addr("127.0.0.1", 10011, true);
+    #ifdef LOCALHOST
+        folly::SocketAddress addr("127.0.0.1", 10011, true);
+    #else
+        folly::SocketAddress addr("mock-database-middle", 10011, true);
+    #endif
     auto middle_server = newServer(addr, std::make_shared<MockDatabaseMiddleHandler>());
     LOG(INFO) << "server: Middle starts";
     

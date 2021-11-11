@@ -22,7 +22,11 @@ bool mock_message_board::MessageServiceHandler::send_message(std::unique_ptr<::s
 }
 
 mock_message_board::MessageServiceHandler::MessageServiceHandler() : clientLoopThread_(new folly::ScopedEventBaseThread())  {
-    addr = folly::SocketAddress("127.0.0.1", 10001, true);
+    #ifdef LOCALHOST
+        addr = folly::SocketAddress("127.0.0.1", 10001, true);
+    #else 
+        addr = folly::SocketAddress("mock-database", 10001, true);
+    #endif
 }
 
 mock_message_board::MessageServiceHandler::~MessageServiceHandler() {

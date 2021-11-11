@@ -34,7 +34,7 @@ include_directories(dep)
 include_directories(shared)
 
 # add_subdirectory(MessageService)
-# add_subdirectory(MockDatabase)
+add_subdirectory(MockDatabase)
 add_subdirectory(SanitizationService)
 # add_subdirectory(Client)
 

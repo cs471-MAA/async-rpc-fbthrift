@@ -15,16 +15,14 @@ option(SYNC "Will tend to create a code for a synchronous execution." OFF)
 if(SYNC)
   add_definitions(-DSYNC)
   message(STATUS
-        "The code will be compiled with the SYNC flags"
-      )
+        "The code will be compiled with the SYNC flags")
 endif()
 
-option(LOCALHOST "Will tend to create a code for a synchronous execution." OFF)
+option(LOCALHOST "Will create a code for localhost execution." OFF)
 if(LOCALHOST)
   add_definitions(-DLOCALHOST)
   message(STATUS
-        "The code will be compiled with localhost."
-      )
+        "The code will be compiled with localhost.")
 endif()
 
 

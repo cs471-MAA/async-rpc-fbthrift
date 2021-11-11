@@ -1,30 +1,25 @@
-//
-// Created by adrien on 11.11.21.
-//
-
 #include <glog/logging.h>
 #include <folly/init/Init.h>
-#include "MessageService.h"
 #include "Utils.h"
+#include "SanitizationService.h"
 
-using mock_message_board::MessageServiceHandler;
+using mock_message_board::SanitizationHandler;
 
-int main(int argc, char** argv) {
+int main(int argc, char *argv[]) {
     // FLAGS_logtostderr = 1;
     folly::init(&argc, &argv);
 
     int i = 0;
     int iothreads = (argc > ++i) ? stoi(argv[i]) : 0;
     int cputhreads = (argc > ++i) ? stoi(argv[i]) : 0;
-    
     #ifdef LOCALHOST
-        folly::SocketAddress addr("127.0.0.1", 10002, true);
+        folly::SocketAddress addr("127.0.0.1", 10003, true);
     #else
-        folly::SocketAddress addr("message-service", 10002, true);
+        folly::SocketAddress addr("sanitization-service", 10003, true);
     #endif
 
-    auto server = newServer(addr, std::make_shared<MessageServiceHandler>());
-
+    auto server = newServer(addr, std::make_shared<SanitizationHandler>());
+    
     if (iothreads > 0)
         server->setNumIOWorkerThreads(iothreads);
     if (cputhreads > 0)

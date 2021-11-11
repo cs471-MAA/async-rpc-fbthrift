@@ -20,7 +20,6 @@ using mock_message_board::MockDatabaseHandler;
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    LOG(INFO) << "Starting test ...";
     // FLAGS_logtostderr = 1;
     folly::init(&argc, &argv);
 
@@ -30,7 +29,11 @@ int main(int argc, char *argv[]) {
     int cputhreads = (argc > ++i) ? stoi(argv[i]) : 0;
 
     // folly::SocketAddress addr("mock-database", 10001, true);
-    folly::SocketAddress addr("127.0.0.1", 10001, true);
+    #ifdef LOCALHOST
+        folly::SocketAddress addr("127.0.0.1", 10001, true);
+    #else
+        folly::SocketAddress addr("mock-database", 10001, true);
+    #endif
     
     auto server = newServer(addr, std::make_shared<MockDatabaseHandler>());
     if (iothreads > 0)

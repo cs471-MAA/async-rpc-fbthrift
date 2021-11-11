@@ -13,7 +13,6 @@
 #include <ctime>
 #include <iostream>
 
-#include "MockDatabaseHandler.h"
 #include "Utils.h"
 
 
@@ -24,12 +23,15 @@ using apache::thrift::ClientReceiveState;
 using apache::thrift::RocketClientChannel;
 using folly::AsyncSocket;
 using folly::ThreadedExecutor;
-using mock_message_board::MockDatabaseHandler;
-using mock_message_board::MockDatabaseAsyncClient;
 using namespace std;
 
 void onReply(string message) {
     LOG(INFO) << "client: get response " << message;
+}
+
+
+void onStoreReply(bool resp) {
+    LOG(INFO) << "client: get response " << resp;
 }
 
 void onError(std::exception const &e) {
@@ -47,7 +49,7 @@ int main(int argc, char *argv[]) {
     int iterations = (argc > ++i) ? stoi(argv[i]) : 5;
     iterations = (iterations > 0) ? iterations : 5;
     string client_id = (argc > ++i) ? argv[i] : "Albert";
-    string message = (argc > ++i) ? argv[i] : "";
+    string message = (argc > ++i) ? argv[i] : "TEST MESSAGE";
     // create event runloop, to run on this thread
     folly::EventBase eb;
 
@@ -63,7 +65,7 @@ int main(int argc, char *argv[]) {
     #endif
 
     // creating client
-    auto client = newMockDatabaseRocketClient(&eb, addr);
+    auto client = newMessageServiceRocketClient(&eb, addr);
     auto start = std::chrono::system_clock::now();
     std::vector<folly::Future<folly::Unit>> futs;
     for (int32_t i = 0; i < iterations; i++) {
@@ -73,7 +75,7 @@ int main(int argc, char *argv[]) {
 
         #ifdef SYNC
             string result; 
-            client->sync_find_last_message(result, "Albert");
+            client->sync_find_last_message(result, client_id);
         #else
         // if (message.length() > 0){
             auto f = client->future_find_last_message(client_id);

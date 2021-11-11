@@ -13,7 +13,8 @@ namespace mock_message_board {
 
         bool send_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) override;
     private:
-        folly::SocketAddress addr;
+        folly::SocketAddress addr1;
+        folly::SocketAddress addr2;
         folly::ScopedEventBaseThread *clientLoopThread_;
         //std::unique_ptr<MockDatabaseAsyncClient> client;
     };

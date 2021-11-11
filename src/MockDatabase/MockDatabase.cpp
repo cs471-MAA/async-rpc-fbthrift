@@ -20,7 +20,6 @@ using mock_message_board::MockDatabaseHandler;
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    LOG(INFO) << "Starting test ...";
     // FLAGS_logtostderr = 1;
     folly::init(&argc, &argv);
 

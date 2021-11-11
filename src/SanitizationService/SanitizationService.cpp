@@ -7,6 +7,8 @@
 #include "SanitizationService.h"
 
 bool mock_message_board::SanitizationHandler::sanitize_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) {
+    std::cout << "sanitization|sanitize_message: received client_id=" << *client_id << " | message=" << *message << std::endl;
+
     std::regex match_expr("^.*[\\/*$^].*$");
     if (std::regex_match(*message, match_expr)) {
         return false;

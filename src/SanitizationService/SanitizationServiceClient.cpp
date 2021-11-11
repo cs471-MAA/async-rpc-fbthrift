@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
     };
 
     // creating client
-    auto client = newRocketClient(&eb, addr);
+    auto client = newMockDatabaseRocketClient(&eb, addr);
     std::vector<folly::Future<folly::Unit>> futs;
     for (int32_t i = 0; i < 5; i++) {
         auto start = std::chrono::system_clock::now();

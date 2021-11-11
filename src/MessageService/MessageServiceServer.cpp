@@ -6,19 +6,14 @@
 #include "MessageService.h"
 #include "Utils.h"
 
+using mock_message_board::MessageServiceHandler;
+
 int main(int argc, char** argv) {
     FLAGS_logtostderr = 1;
     folly::init(&argc, &argv);
 
-    auto chatroom_server = newServer<MessageServiceHandler>(666);
-    std::thread t([&] {
-        LOG(INFO) << "ChatRoom Server running on port: " << FLAGS_chatroom_port;
-        chatroom_server->serve();
-    });
-
-    auto echo_server = newServer<EchoHandler>(FLAGS_echo_port);
-    LOG(INFO) << "Echo Server running on port: " << FLAGS_echo_port;
-    echo_server->serve();
+    folly::SocketAddress addr("mock-database", 10001, true);
+    auto server = newServer(addr, std::make_shared<MessageServiceHandler>(true));
 
     return 0;
 }

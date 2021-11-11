@@ -3,6 +3,7 @@ add_executable(
 		MessageService
 
 		MessageServiceServer.cpp
+		MessageService.cpp
 )
 target_link_libraries(
 		MessageService

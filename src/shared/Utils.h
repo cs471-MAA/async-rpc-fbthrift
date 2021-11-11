@@ -19,7 +19,7 @@ folly::AsyncTransport::UniquePtr getSocket(folly::EventBase *evb, folly::SocketA
     return sock;
 }
 
-static std::unique_ptr<MockDatabaseAsyncClient> newMockDatabaseRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr) {
+std::unique_ptr<MockDatabaseAsyncClient> newMockDatabaseRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr) {
 
     auto channel = RocketClientChannel::newChannel(getSocket(evb, addr));
     channel->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);

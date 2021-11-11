@@ -30,8 +30,10 @@ find_library(atomic-lib atomic)
 
 include(dep/if/CMakeLists.txt)
 
-add_subdirectory(MessageService)
+include_directories(dep)
+
+# add_subdirectory(MessageService)
 add_subdirectory(MockDatabase)
-add_subdirectory(SanitizationService)
-add_subdirectory(Client)
+# add_subdirectory(SanitizationService)
+# add_subdirectory(Client)
 

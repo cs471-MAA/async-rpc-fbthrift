@@ -11,50 +11,33 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-set(CMAKE_CXX_STANDARD 17)
-PROJECT(ThriftTransport_CPP2_Example CXX)
+
 # set(CMAKE_VERBOSE_MAKEFILE ON)
 
-cmake_minimum_required(VERSION 3.16)
-set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake_module")
-
-find_package(gflags REQUIRED)
-#find_package(proxygen REQUIRED)
-find_package(FBThrift REQUIRED)
-find_package(Folly REQUIRED)
-find_package(Wangle REQUIRED)
-find_package(fizz REQUIRED)
-find_package(Threads REQUIRED)
-
-find_library(atomic-lib atomic)
-
-include(dep/if/CMakeLists.txt)
-include_directories(dep)
-
 add_executable(
-		server
+	MockDatabase
 
-		server.cpp
+	MockDatabase.cpp
 )
 target_link_libraries(
-		server
+	MockDatabase
 
-		example-cpp2
-		atomic
-		FBThrift::thriftcpp2
+	mock_message_board-cpp2
+	atomic
+	FBThrift::thriftcpp2
 )
-install(TARGETS server DESTINATION /usr/bin/)
 
 add_executable(
-		client
+	MockDatabaseClient
 
-		client.cpp
+	MockDatabaseClient.cpp
 )
 target_link_libraries(
-		client
+	MockDatabaseClient
 
-		example-cpp2
-		atomic
-		FBThrift::thriftcpp2
+	mock_message_board-cpp2
+	atomic
+	FBThrift::thriftcpp2
 )
-install(TARGETS client DESTINATION /usr/bin/)
+
+# install(TARGETS server DESTINATION /usr/bin/)

@@ -21,7 +21,7 @@ include(/usr/local/include/thrift/ThriftLibrary.cmake)
 # Example to test linking
 thrift_library(
   "mock_message_board" #file_name
-  "MockMessageBoard" #services
+  "MockDatabase;MessageService;SanitizationService" #services
   "cpp2" #language
   "" #options
   "${EXAMPLE_IF_HOME}" #file_path

@@ -1,7 +1,5 @@
 FROM saheru/fbthrift:latest
 
-RUN mkdir -p /app 
-
 WORKDIR /app
 COPY . /app
 

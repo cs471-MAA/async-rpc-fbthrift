@@ -4,7 +4,10 @@
 
 #include <Utils.h>
 #include <regex>
+#include <if/gen-cpp2/MessageService.h>
 #include "SanitizationService.h"
+
+using mock_message_board::MessageServiceAsyncClient;
 
 bool mock_message_board::SanitizationHandler::sanitize_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) {
     std::cout << "sanitization|sanitize_message: received client_id=" << *client_id << " | message=" << *message << std::endl;
@@ -15,7 +18,7 @@ bool mock_message_board::SanitizationHandler::sanitize_message(std::unique_ptr<:
     }
 
     folly::EventBase eb;
-    std::unique_ptr<MockDatabaseAsyncClient> client = newMockDatabaseRocketClient(&eb, this->addr);
+    auto client = newRocketClient<MockDatabaseAsyncClient>(&eb, this->addr);
     client->sync_store_message(*client_id, *message);
 
     return true;

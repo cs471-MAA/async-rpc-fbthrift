@@ -13,6 +13,7 @@
 #include <ctime>
 #include <iostream>
 
+#include <if/gen-cpp2/MessageService.h>
 #include "Utils.h"
 
 
@@ -23,6 +24,7 @@ using apache::thrift::ClientReceiveState;
 using apache::thrift::RocketClientChannel;
 using folly::AsyncSocket;
 using folly::ThreadedExecutor;
+using mock_message_board::MessageServiceAsyncClient;
 using namespace std;
 
 void onReply(string message) {
@@ -65,7 +67,7 @@ int main(int argc, char *argv[]) {
     #endif
 
     // creating client
-    auto client = newMessageServiceRocketClient(&eb, addr);
+    auto client = newRocketClient<MessageServiceAsyncClient>(&eb, addr);
     auto start = std::chrono::system_clock::now();
     std::vector<folly::Future<folly::Unit>> futs;
     for (int32_t i = 0; i < iterations; i++) {

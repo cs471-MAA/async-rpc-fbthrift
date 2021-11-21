@@ -31,7 +31,7 @@ services:
         image: saheru/fbthrift-benchmark
         hostname: client
         restart: always
-        command: ["./src/build/MockDatabase/MockDatabaseClient"]
+        command: ["./src/build/Client/client"]
         depends_on:
             - message-service
 

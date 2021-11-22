@@ -1,3 +1,4 @@
 src/dep/if/gen-cpp2/
 src/build
 .vscode
+src/.cache

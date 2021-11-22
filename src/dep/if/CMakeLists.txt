@@ -16,15 +16,34 @@
 set(THRIFT1 "/usr/local/bin/thrift1")
 set(THRIFTCPP2 "/usr/local/lib/libthriftcpp2.a")
 
-set(EXAMPLE_IF_HOME ${CMAKE_CURRENT_SOURCE_DIR}/dep/if)
-include(/usr/local/include/thrift/ThriftLibrary.cmake)
-# Example to test linking
-thrift_library(
-  "example" #file_name
-  "ExampleService" #services
-  "cpp2" #language
-  "" #options
-  "${EXAMPLE_IF_HOME}" #file_path
-  "${EXAMPLE_IF_HOME}" #output_path
-  "if" #include_prefix
+# set(EXAMPLE_IF_HOME ${CMAKE_CURRENT_SOURCE_DIR}/dep/if)
+# include(/usr/local/include/thrift/ThriftLibrary.cmake)
+# thrift_library(
+#   "mock_message_board" #file_name
+#   "MockDatabase;MessageService;SanitizationService" #services
+#   "cpp2" #language
+#   "" #options
+#   "${EXAMPLE_IF_HOME}" #file_path
+#   "${EXAMPLE_IF_HOME}" #output_path
+#   "if" #include_prefix
+# )
+
+include(FBThriftCppLibrary)
+
+add_fbthrift_cpp_library(
+  fb303_cpp2
+  common/fb303/if/fb303.thrift
+  SERVICES
+    FacebookService
+)
+
+add_fbthrift_cpp_library(
+  "mock_message_board_cpp"
+  "dep/if/mock_message_board.thrift"
+  SERVICES
+    MockDatabase
+    MessageService
+    SanitizationService
+  DEPENDS
+    fb303_cpp2
 )

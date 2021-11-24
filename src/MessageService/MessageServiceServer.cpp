@@ -43,6 +43,12 @@ int main(int argc, char** argv) {
         std::cout << "server: counter=" << item.first << " | value=" << item.second << std::endl;
     }
 
+    auto dyn_counters = fb303::fbData->getDynamicCounters();
+    std::cout << "server: # of dynamic counters=" << static_cast<long unsigned>(counters.size()) << std::endl;
+    for (auto item : counters) {
+        std::cout << "server: dynamic counter=" << item.first << " | value=" << item.second << std::endl;
+    }
+
     // run server
     server->serve();
     

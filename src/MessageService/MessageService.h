@@ -31,9 +31,16 @@ namespace mock_message_board {
             // fb303 counter
             const auto p1 = std::chrono::system_clock::now();
             fb303::fbData->setCounter(
-                "find_last_message.date",
+                "start.date",
                 (int64_t) std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count()
             );
+            fb303::fbData->setCounter(
+                "start.date",
+                (int64_t) 2
+            );
+            fb303::fbData->addStatValue("nb_requests", 1, fb303::SUM);
+            fb303::fbData->addStatValue("nb_requests", 1, fb303::SUM);
+            fb303::fbData->addStatValue("nb_requests", 1, fb303::SUM);
         }
         ~MessageServiceHandler() {
             delete clientLoopThread_;

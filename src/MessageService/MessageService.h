@@ -15,7 +15,7 @@ namespace mock_message_board {
     private:
         folly::SocketAddress addr1;
         folly::SocketAddress addr2;
-        folly::ScopedEventBaseThread *clientLoopThread_;
+        std::unordered_map<std::thread::id, std::unique_ptr<SanitizationServiceAsyncClient>> sanMap;
         //std::unique_ptr<MockDatabaseAsyncClient> client;
     };
 }

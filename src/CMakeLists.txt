@@ -18,7 +18,7 @@ if(SYNC)
         "The code will be compiled with the SYNC flags")
 endif()
 
-option(LOCALHOST "Will create a code for localhost execution." OFF)
+option(LOCALHOST "Will create a code for localhost execution." ON)
 if(LOCALHOST)
   add_definitions(-DLOCALHOST)
   message(STATUS

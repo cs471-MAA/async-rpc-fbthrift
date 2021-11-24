@@ -21,16 +21,23 @@ void mock_message_board::MessageServiceHandler::find_last_message(::std::string&
 
 bool mock_message_board::MessageServiceHandler::send_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) {
     std::cout << "message-service|send_message: received client_id=" << *client_id << " | message=" << *message << std::endl;
-    
-    bool ret_val;
-    folly::EventBase eb;
-    auto client = newRocketClient<SanitizationServiceAsyncClient>(&eb, addr2);
-    ret_val = client->sync_sanitize_message(*client_id, *message);
 
-    return ret_val;
+
+
+    auto search = sanMap.find(std::this_thread::get_id());
+    if(search == sanMap.end()){
+        auto *eb = new folly::EventBase();
+        cout << "created new client for thread ID " << std::this_thread::get_id() << "\n";
+
+        return sanMap.insert({std::this_thread::get_id(), newRocketClient<SanitizationServiceAsyncClient>(eb, addr2)})
+        .first->second->sync_sanitize_message(*client_id, *message);
+    }else{
+        cout << "Used client for thread ID " << std::this_thread::get_id() << "\n";
+        return search->second->sync_sanitize_message(*client_id, *message);
+    }
 }
 
-mock_message_board::MessageServiceHandler::MessageServiceHandler() : clientLoopThread_(new folly::ScopedEventBaseThread())  {
+mock_message_board::MessageServiceHandler::MessageServiceHandler() {
 
     #ifdef LOCALHOST
         addr1 = folly::SocketAddress("127.0.0.1", 10001, true); // mock database
@@ -43,5 +50,4 @@ mock_message_board::MessageServiceHandler::MessageServiceHandler() : clientLoopT
 }
 
 mock_message_board::MessageServiceHandler::~MessageServiceHandler() {
-    delete clientLoopThread_;
 }

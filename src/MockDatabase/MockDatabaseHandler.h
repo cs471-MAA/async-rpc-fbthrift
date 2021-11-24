@@ -23,7 +23,7 @@ namespace mock_message_board {
             std::chrono::duration<double> elapsed_seconds = end - start;
             cout << "mock-database|find_last_message: received find last message rpc with " << *client_id << " at " << elapsed_seconds.count() << "s." << endl;
             
-            this_thread::sleep_for(10000ms);
+            this_thread::sleep_for(500ms);
 
             if (last_messages.find(*client_id) == last_messages.end()){
             // if (last_messages.contains(*client_id)){

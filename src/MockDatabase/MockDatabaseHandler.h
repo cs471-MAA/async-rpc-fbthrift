@@ -18,12 +18,12 @@ namespace mock_message_board {
         
         MockDatabaseHandler() : start(std::chrono::system_clock::now()){}
 
-        void find_last_message(string& result, unique_ptr<string> client_id){
+        void find_last_message(string& result, unique_ptr<string> client_id) override{
             auto end = std::chrono::system_clock::now();
             std::chrono::duration<double> elapsed_seconds = end - start;
             cout << "mock-database|find_last_message: received find last message rpc with " << *client_id << " at " << elapsed_seconds.count() << "s." << endl;
             
-            this_thread::sleep_for(500ms);
+            //this_thread::sleep_for(120ms);
 
             if (last_messages.find(*client_id) == last_messages.end()){
             // if (last_messages.contains(*client_id)){
@@ -41,9 +41,9 @@ namespace mock_message_board {
         // folly::SemiFuture<std::unique_ptr<::std::string>> semifuture_find_last_message(std::unique_ptr<::std::string> p_client_id) override;
         // void async_tm_find_last_message(std::unique_ptr<apache::thrift::HandlerCallback<std::unique_ptr<::std::string>>> callback, std::unique_ptr<::std::string> p_client_id) override;
         
-        bool store_message(unique_ptr<string> client_id, unique_ptr<string> message) {
+        bool store_message(unique_ptr<string> client_id, unique_ptr<string> message) override {
             cout << "mock-database|store_message: received store message rpc with " << *client_id << endl;
-            this_thread::sleep_for(10000ms);
+            //this_thread::sleep_for(200ms);
 
             last_messages[*client_id] = *message;
             

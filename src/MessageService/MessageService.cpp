@@ -13,10 +13,19 @@ using mock_message_board::SanitizationServiceAsyncClient;
 
 void mock_message_board::MessageServiceHandler::find_last_message(::std::string& result, std::unique_ptr<::std::string> client_id) {
     std::cout << "message-service|find_last_message: received client_id=" << *client_id << std::endl;
-    
-    folly::EventBase eb;
-    auto client = newRocketClient<MockDatabaseAsyncClient>(&eb, addr1);
-    client->sync_find_last_message(result, *client_id);
+
+    auto search = dbMap.find(std::this_thread::get_id());
+    if(search == dbMap.end()){
+        auto *eb = new folly::EventBase();
+        cout << "created new client for thread ID " << std::this_thread::get_id() << "\n";
+
+        return dbMap.insert({std::this_thread::get_id(), newRocketClient<MockDatabaseAsyncClient>(eb, addr1)})
+                .first->second->sync_find_last_message(result, *client_id);
+    }else{
+        cout << "Used client for thread ID " << std::this_thread::get_id() << "\n";
+        return search->second->sync_find_last_message(result, *client_id);
+    }
+
 }
 
 bool mock_message_board::MessageServiceHandler::send_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) {

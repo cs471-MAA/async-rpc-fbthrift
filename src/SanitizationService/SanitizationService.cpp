@@ -17,14 +17,20 @@ bool mock_message_board::SanitizationHandler::sanitize_message(std::unique_ptr<:
         return false;
     }
 
-    folly::EventBase eb;
-    auto client = newRocketClient<MockDatabaseAsyncClient>(&eb, this->addr);
-    client->sync_store_message(*client_id, *message);
+    auto search = dbMap.find(std::this_thread::get_id());
+    if(search == dbMap.end()){
+        auto *eb = new folly::EventBase();
+        cout << "created new client for thread ID " << std::this_thread::get_id() << "\n";
 
-    return true;
+        return dbMap.insert({std::this_thread::get_id(), newRocketClient<MockDatabaseAsyncClient>(eb, addr)})
+                .first->second->sync_store_message(*client_id, *message);
+    }else{
+        cout << "Used client for thread ID " << std::this_thread::get_id() << "\n";
+        return search->second->sync_store_message(*client_id, *message);
+    }
 }
 
-mock_message_board::SanitizationHandler::SanitizationHandler() : clientLoopThread_(new folly::ScopedEventBaseThread())  {
+mock_message_board::SanitizationHandler::SanitizationHandler() {
     #ifdef LOCALHOST
         addr = folly::SocketAddress("127.0.0.1", 10001, true); // mock database
     #else
@@ -33,5 +39,4 @@ mock_message_board::SanitizationHandler::SanitizationHandler() : clientLoopThrea
 }
 
 mock_message_board::SanitizationHandler::~SanitizationHandler() {
-    delete clientLoopThread_;
 }

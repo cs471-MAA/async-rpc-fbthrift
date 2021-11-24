@@ -15,6 +15,7 @@ using mock_message_board::SanitizationServiceAsyncClient;
 void mock_message_board::MessageServiceHandler::find_last_message(::std::string& result, std::unique_ptr<::std::string> client_id) {
     std::map<std::string, int64_t> counters;
     this->getCounters(counters);
+    std::cout << "message-service|find_last_message: number of counters=" << counters.size() << std::endl;
     for(auto item : counters) {
         std::cout << "counter: " << item.first << "=" << item.second << std::endl;
     }

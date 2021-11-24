@@ -1,5 +1,4 @@
 
-add_definitions(-DLOCALHOST)
 add_executable(
 	client
 

@@ -47,8 +47,8 @@ int main(int argc, char *argv[]) {
     google::SetCommandLineOption("GLOG_minloglevel", "0"); // INFO
     LOG(INFO) << "Starting Client ...";
     int i = 0;
-    int iterations = (argc > ++i) ? stoi(argv[i]) : 10000;
-    iterations = (iterations > 0) ? iterations : 10000;
+    int iterations = (argc > ++i) ? stoi(argv[i]) : 10;
+    iterations = (iterations > 0) ? iterations : 10;
     string client_id = (argc > ++i) ? argv[i] : "Albert";
     string message = (argc > ++i) ? argv[i] : "TEST MESSAGE";
     // create event runloop, to run on this thread

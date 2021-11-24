@@ -1,5 +1,3 @@
-dependencies/*
-/dep/if/gen-cpp2/
 build
 src/.cache
 src/build

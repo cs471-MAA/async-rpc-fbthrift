@@ -5,20 +5,25 @@
 #include <Utils.h>
 #include <dep/if/gen-cpp2/MockDatabase.h>
 #include <dep/if/gen-cpp2/SanitizationService.h>
+#include <fb303/ServiceData.h>
 #include <iostream>
+#include <chrono>
 #include "MessageService.h"
+
+namespace fb303 = facebook::fb303;
 
 using mock_message_board::MockDatabaseAsyncClient;
 using mock_message_board::SanitizationServiceAsyncClient;
 
 
 void mock_message_board::MessageServiceHandler::find_last_message(::std::string& result, std::unique_ptr<::std::string> client_id) {
-    std::map<std::string, int64_t> counters;
-    this->getCounters(counters);
-    std::cout << "message-service|find_last_message: number of counters=" << counters.size() << std::endl;
-    for(auto item : counters) {
-        std::cout << "counter: " << item.first << "=" << item.second << std::endl;
-    }
+    // fb303 counter
+    const auto p1 = std::chrono::system_clock::now();
+    fb303::fbData->setCounter(
+        "find_last_message.date",
+        (int64_t) std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count()
+    );
+
     std::cout << "message-service|find_last_message: received client_id=" << *client_id << std::endl;
     
     folly::EventBase eb;

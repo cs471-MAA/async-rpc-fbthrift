@@ -2,18 +2,24 @@
 
 #include <dep/if/gen-cpp2/MessageService.h>
 #include "folly/io/async/ScopedEventBaseThread.h"
+#include <fb303/ServiceData.h>
 #include <Utils.h>
 #include "common/fb303/cpp/FacebookBase2.h"
+// #include <fb303/BaseService.h>
+
+namespace fb303 = facebook::fb303;
 
 using facebook::fb303::FacebookBase2;
 
 
 namespace mock_message_board {
     class MessageServiceHandler : virtual public MessageServiceSvIf,
+                                //   public facebook::fb303::BaseService {
                                   public FacebookBase2 {
     public:
         explicit MessageServiceHandler()
         : FacebookBase2("MessageService"), clientLoopThread_(new folly::ScopedEventBaseThread())  {
+        // : BaseService("MessageService"), clientLoopThread_(new folly::ScopedEventBaseThread())  {
             #ifdef LOCALHOST
                 addr1 = folly::SocketAddress("127.0.0.1", 10001, true); // mock database
                 addr2 = folly::SocketAddress("127.0.0.1", 10003, true); // sanitization
@@ -21,6 +27,13 @@ namespace mock_message_board {
                 addr1 = folly::SocketAddress("mock-database", 10001, true); // mock database
                 addr2 = folly::SocketAddress("sanitization-service", 10003, true); // sanitization
             #endif
+
+            // fb303 counter
+            const auto p1 = std::chrono::system_clock::now();
+            fb303::fbData->setCounter(
+                "find_last_message.date",
+                (int64_t) std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count()
+            );
         }
         ~MessageServiceHandler() {
             delete clientLoopThread_;

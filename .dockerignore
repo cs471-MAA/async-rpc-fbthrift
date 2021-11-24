@@ -1,8 +1,8 @@
 .vscode
 .gitignore
 .git
-frontend-server
 docker-compose.yml
 Dockerfile
 .dockerignore
 src/build
+src/.cache

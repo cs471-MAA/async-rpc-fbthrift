@@ -8,5 +8,4 @@ RUN cd /app/src \
     && mkdir -p build \
     && cd build \
     && cmake .. \
-    && make -j$(nproc) \
-    && make install
+    && make -j$(nproc)

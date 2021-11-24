@@ -51,8 +51,10 @@ include_directories(${FB303_INCLUDE_DIR})
 
 find_library(atomic-lib atomic)
 
+# .thrift files. TODO: remove this file
 # include(dep/if/CMakeLists.txt)
 
+# .thrift file libraries
 include(FBThriftCppLibrary)
 
 add_fbthrift_cpp_library(
@@ -62,8 +64,12 @@ add_fbthrift_cpp_library(
     FacebookService
 )
 
+# TODO: these two lines might not be necessary
+set(THRIFT1 "/usr/local/bin/thrift1")
+set(THRIFTCPP2 "/usr/local/lib/libthriftcpp2.a")
+
 add_fbthrift_cpp_library(
-  mock_message_board_cpp2
+  mock_message_board-cpp2
   dep/if/mock_message_board.thrift
   SERVICES
     MockDatabase

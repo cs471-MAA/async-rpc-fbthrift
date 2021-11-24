@@ -38,11 +38,11 @@ add_fbthrift_cpp_library(
 )
 
 add_fbthrift_cpp_library(
-  "mock_message_board_cpp"
-  "dep/if/mock_message_board.thrift"
+  mock_message_board_cpp
+  dep/if/mock_message_board.thrift
   SERVICES
-    MockDatabase
     MessageService
+    MockDatabase
     SanitizationService
   DEPENDS
     fb303_cpp2

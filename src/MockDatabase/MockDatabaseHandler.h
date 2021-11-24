@@ -3,7 +3,7 @@
 #include <glog/logging.h>
 #include <unordered_map>
 #include <thread>
-#include "if/gen-cpp2/MockDatabase.h"
+#include <dep/if/gen-cpp2/MockDatabase.h>
 #include <iostream>
 #include <chrono>
 #include <ctime>

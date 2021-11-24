@@ -8,7 +8,7 @@
 #include <chrono>
 #include <ctime>
 
-#include <if/gen-cpp2/SanitizationService.h>
+#include <dep/if/gen-cpp2/SanitizationService.h>
 #include "Utils.h"
 
 using apache::thrift::ThriftServer;

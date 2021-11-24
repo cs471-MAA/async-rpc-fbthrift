@@ -3,8 +3,8 @@
 //
 
 #include <Utils.h>
-#include <if/gen-cpp2/MockDatabase.h>
-#include <if/gen-cpp2/SanitizationService.h>
+#include <dep/if/gen-cpp2/MockDatabase.h>
+#include <dep/if/gen-cpp2/SanitizationService.h>
 #include <iostream>
 #include "MessageService.h"
 

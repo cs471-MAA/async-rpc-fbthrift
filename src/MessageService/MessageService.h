@@ -1,6 +1,6 @@
 #pragma once
 
-#include "if/gen-cpp2/MessageService.h"
+#include <dep/if/gen-cpp2/MessageService.h>
 #include "folly/io/async/ScopedEventBaseThread.h"
 #include <Utils.h>
 #include "common/fb303/cpp/FacebookBase2.h"

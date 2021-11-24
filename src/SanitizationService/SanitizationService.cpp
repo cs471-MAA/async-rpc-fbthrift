@@ -4,7 +4,7 @@
 
 #include <Utils.h>
 #include <regex>
-#include <if/gen-cpp2/MessageService.h>
+#include <dep/if/gen-cpp2/MessageService.h>
 #include "SanitizationService.h"
 
 using mock_message_board::MessageServiceAsyncClient;

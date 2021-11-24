@@ -4,4 +4,6 @@
 docker-compose.yml
 Dockerfile
 .dockerignore
+src/.cache
 src/build
+src/dep/if/gen-cpp2

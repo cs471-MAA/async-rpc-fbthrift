@@ -18,7 +18,7 @@ if(SYNC)
         "The code will be compiled with the SYNC flags")
 endif()
 
-option(LOCALHOST "Will create a code for localhost execution." ON)
+option(LOCALHOST "Will create a code for localhost execution." OFF)
 if(LOCALHOST)
   add_definitions(-DLOCALHOST)
   message(STATUS
@@ -33,6 +33,10 @@ PROJECT(ThriftTransport_CPP2_Example CXX)
 cmake_minimum_required(VERSION 3.16)
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake_module")
 
+include_directories(${CMAKE_SOURCE_DIR})
+include_directories(${CMAKE_BUILD_DIR})
+
+# fbThrift related dependencies
 find_package(gflags REQUIRED)
 #find_package(proxygen REQUIRED)
 find_package(FBThrift REQUIRED)
@@ -41,9 +45,39 @@ find_package(Wangle REQUIRED)
 find_package(fizz REQUIRED)
 find_package(Threads REQUIRED)
 
+# facebook's simple service performance query lib
+find_package(fb303 REQUIRED)
+include_directories(${FB303_INCLUDE_DIR})
+
 find_library(atomic-lib atomic)
 
-include(dep/if/CMakeLists.txt)
+# .thrift files. TODO: remove this file
+# include(dep/if/CMakeLists.txt)
+
+# .thrift file libraries
+include(FBThriftCppLibrary)
+
+add_fbthrift_cpp_library(
+  fb303_cpp2
+  common/fb303/if/fb303.thrift
+  SERVICES
+    FacebookService
+)
+
+# TODO: these two lines might not be necessary
+set(THRIFT1 "/usr/local/bin/thrift1")
+set(THRIFTCPP2 "/usr/local/lib/libthriftcpp2.a")
+
+add_fbthrift_cpp_library(
+  mock_message_board-cpp2
+  dep/if/mock_message_board.thrift
+  SERVICES
+    MockDatabase
+    MessageService
+    SanitizationService
+  DEPENDS
+    fb303_cpp2
+)
 
 include_directories(dep)
 include_directories(shared)

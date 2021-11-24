@@ -6,9 +6,9 @@
 #include <folly/io/async/AsyncSocket.h>
 #include <thrift/lib/cpp2/server/ThriftServer.h>
 #include <thrift/lib/cpp2/async/RocketClientChannel.h>
-#include "if/gen-cpp2/MockDatabase.h"
-#include "if/gen-cpp2/SanitizationService.h"
-#include "if/gen-cpp2/MessageService.h"
+#include <dep/if/gen-cpp2/MockDatabase.h>
+#include <dep/if/gen-cpp2/SanitizationService.h>
+#include <dep/if/gen-cpp2/MessageService.h>
 #include <iostream>
 
 using folly::AsyncSocket;

@@ -14,7 +14,6 @@
 
 # set(CMAKE_VERBOSE_MAKEFILE ON)
 
-add_definitions(-DLOCALHOST)
 add_executable(
 	MockDatabase
 

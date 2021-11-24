@@ -1,102 +1,208 @@
 [
 {
   "directory": "./src/build",
-  "command": "/usr/bin/c++   -I./src/dep -I./src/shared    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2-obj.dir/dep/if/gen-cpp2/mock_message_board_constants.cpp.o -c ./src/dep/if/gen-cpp2/mock_message_board_constants.cpp",
-  "file": "./src/dep/if/gen-cpp2/mock_message_board_constants.cpp"
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/mock_message_board_constants.cpp.o -c ./src/build/dep/if/gen-cpp2/mock_message_board_constants.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/mock_message_board_constants.cpp"
 },
 {
   "directory": "./src/build",
-  "command": "/usr/bin/c++   -I./src/dep -I./src/shared    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2-obj.dir/dep/if/gen-cpp2/mock_message_board_data.cpp.o -c ./src/dep/if/gen-cpp2/mock_message_board_data.cpp",
-  "file": "./src/dep/if/gen-cpp2/mock_message_board_data.cpp"
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/mock_message_board_data.cpp.o -c ./src/build/dep/if/gen-cpp2/mock_message_board_data.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/mock_message_board_data.cpp"
 },
 {
   "directory": "./src/build",
-  "command": "/usr/bin/c++   -I./src/dep -I./src/shared    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2-obj.dir/dep/if/gen-cpp2/mock_message_board_types.cpp.o -c ./src/dep/if/gen-cpp2/mock_message_board_types.cpp",
-  "file": "./src/dep/if/gen-cpp2/mock_message_board_types.cpp"
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/mock_message_board_types.cpp.o -c ./src/build/dep/if/gen-cpp2/mock_message_board_types.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/mock_message_board_types.cpp"
 },
 {
   "directory": "./src/build",
-  "command": "/usr/bin/c++   -I./src/dep -I./src/shared    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2-obj.dir/dep/if/gen-cpp2/mock_message_board_metadata.cpp.o -c ./src/dep/if/gen-cpp2/mock_message_board_metadata.cpp",
-  "file": "./src/dep/if/gen-cpp2/mock_message_board_metadata.cpp"
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/mock_message_board_metadata.cpp.o -c ./src/build/dep/if/gen-cpp2/mock_message_board_metadata.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/mock_message_board_metadata.cpp"
 },
 {
   "directory": "./src/build",
-  "command": "/usr/bin/c++   -I./src/dep -I./src/shared    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2-obj.dir/dep/if/gen-cpp2/MockDatabase.cpp.o -c ./src/dep/if/gen-cpp2/MockDatabase.cpp",
-  "file": "./src/dep/if/gen-cpp2/MockDatabase.cpp"
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/MockDatabase.cpp.o -c ./src/build/dep/if/gen-cpp2/MockDatabase.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/MockDatabase.cpp"
 },
 {
   "directory": "./src/build",
-  "command": "/usr/bin/c++   -I./src/dep -I./src/shared    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2-obj.dir/dep/if/gen-cpp2/MockDatabaseAsyncClient.cpp.o -c ./src/dep/if/gen-cpp2/MockDatabaseAsyncClient.cpp",
-  "file": "./src/dep/if/gen-cpp2/MockDatabaseAsyncClient.cpp"
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/MockDatabaseAsyncClient.cpp.o -c ./src/build/dep/if/gen-cpp2/MockDatabaseAsyncClient.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/MockDatabaseAsyncClient.cpp"
 },
 {
   "directory": "./src/build",
-  "command": "/usr/bin/c++   -I./src/dep -I./src/shared    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2-obj.dir/dep/if/gen-cpp2/MessageService.cpp.o -c ./src/dep/if/gen-cpp2/MessageService.cpp",
-  "file": "./src/dep/if/gen-cpp2/MessageService.cpp"
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/MockDatabase_processmap_binary.cpp.o -c ./src/build/dep/if/gen-cpp2/MockDatabase_processmap_binary.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/MockDatabase_processmap_binary.cpp"
 },
 {
   "directory": "./src/build",
-  "command": "/usr/bin/c++   -I./src/dep -I./src/shared    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2-obj.dir/dep/if/gen-cpp2/MessageServiceAsyncClient.cpp.o -c ./src/dep/if/gen-cpp2/MessageServiceAsyncClient.cpp",
-  "file": "./src/dep/if/gen-cpp2/MessageServiceAsyncClient.cpp"
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/MockDatabase_processmap_compact.cpp.o -c ./src/build/dep/if/gen-cpp2/MockDatabase_processmap_compact.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/MockDatabase_processmap_compact.cpp"
 },
 {
   "directory": "./src/build",
-  "command": "/usr/bin/c++   -I./src/dep -I./src/shared    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2-obj.dir/dep/if/gen-cpp2/SanitizationService.cpp.o -c ./src/dep/if/gen-cpp2/SanitizationService.cpp",
-  "file": "./src/dep/if/gen-cpp2/SanitizationService.cpp"
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/MessageService.cpp.o -c ./src/build/dep/if/gen-cpp2/MessageService.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/MessageService.cpp"
 },
 {
   "directory": "./src/build",
-  "command": "/usr/bin/c++   -I./src/dep -I./src/shared    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2-obj.dir/dep/if/gen-cpp2/SanitizationServiceAsyncClient.cpp.o -c ./src/dep/if/gen-cpp2/SanitizationServiceAsyncClient.cpp",
-  "file": "./src/dep/if/gen-cpp2/SanitizationServiceAsyncClient.cpp"
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/MessageServiceAsyncClient.cpp.o -c ./src/build/dep/if/gen-cpp2/MessageServiceAsyncClient.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/MessageServiceAsyncClient.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/MessageService_processmap_binary.cpp.o -c ./src/build/dep/if/gen-cpp2/MessageService_processmap_binary.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/MessageService_processmap_binary.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/MessageService_processmap_compact.cpp.o -c ./src/build/dep/if/gen-cpp2/MessageService_processmap_compact.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/MessageService_processmap_compact.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/SanitizationService.cpp.o -c ./src/build/dep/if/gen-cpp2/SanitizationService.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/SanitizationService.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/SanitizationServiceAsyncClient.cpp.o -c ./src/build/dep/if/gen-cpp2/SanitizationServiceAsyncClient.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/SanitizationServiceAsyncClient.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/SanitizationService_processmap_binary.cpp.o -c ./src/build/dep/if/gen-cpp2/SanitizationService_processmap_binary.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/SanitizationService_processmap_binary.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/mock_message_board-cpp2.dir/dep/if/gen-cpp2/SanitizationService_processmap_compact.cpp.o -c ./src/build/dep/if/gen-cpp2/SanitizationService_processmap_compact.cpp",
+  "file": "./src/build/dep/if/gen-cpp2/SanitizationService_processmap_compact.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/fb303_cpp2.dir/common/fb303/if/gen-cpp2/fb303_constants.cpp.o -c ./src/build/common/fb303/if/gen-cpp2/fb303_constants.cpp",
+  "file": "./src/build/common/fb303/if/gen-cpp2/fb303_constants.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/fb303_cpp2.dir/common/fb303/if/gen-cpp2/fb303_data.cpp.o -c ./src/build/common/fb303/if/gen-cpp2/fb303_data.cpp",
+  "file": "./src/build/common/fb303/if/gen-cpp2/fb303_data.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/fb303_cpp2.dir/common/fb303/if/gen-cpp2/fb303_types.cpp.o -c ./src/build/common/fb303/if/gen-cpp2/fb303_types.cpp",
+  "file": "./src/build/common/fb303/if/gen-cpp2/fb303_types.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/fb303_cpp2.dir/common/fb303/if/gen-cpp2/fb303_metadata.cpp.o -c ./src/build/common/fb303/if/gen-cpp2/fb303_metadata.cpp",
+  "file": "./src/build/common/fb303/if/gen-cpp2/fb303_metadata.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/fb303_cpp2.dir/common/fb303/if/gen-cpp2/FacebookService.cpp.o -c ./src/build/common/fb303/if/gen-cpp2/FacebookService.cpp",
+  "file": "./src/build/common/fb303/if/gen-cpp2/FacebookService.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/fb303_cpp2.dir/common/fb303/if/gen-cpp2/FacebookServiceAsyncClient.cpp.o -c ./src/build/common/fb303/if/gen-cpp2/FacebookServiceAsyncClient.cpp",
+  "file": "./src/build/common/fb303/if/gen-cpp2/FacebookServiceAsyncClient.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/fb303_cpp2.dir/common/fb303/if/gen-cpp2/FacebookService_processmap_binary.cpp.o -c ./src/build/common/fb303/if/gen-cpp2/FacebookService_processmap_binary.cpp",
+  "file": "./src/build/common/fb303/if/gen-cpp2/FacebookService_processmap_binary.cpp"
+},
+{
+  "directory": "./src/build",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/build -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/fb303_cpp2.dir/common/fb303/if/gen-cpp2/FacebookService_processmap_compact.cpp.o -c ./src/build/common/fb303/if/gen-cpp2/FacebookService_processmap_compact.cpp",
+  "file": "./src/build/common/fb303/if/gen-cpp2/FacebookService_processmap_compact.cpp"
 },
 {
   "directory": "./src/build/MessageService",
-  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MessageServiceServer.dir/MessageServiceServer.cpp.o -c ./src/MessageService/MessageServiceServer.cpp",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MessageServiceServer.dir/MessageServiceServer.cpp.o -c ./src/MessageService/MessageServiceServer.cpp",
   "file": "./src/MessageService/MessageServiceServer.cpp"
 },
 {
   "directory": "./src/build/MessageService",
+<<<<<<< HEAD
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MessageServiceServer.dir/MessageService.cpp.o -c ./src/MessageService/MessageService.cpp",
+=======
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MessageServiceServer.dir/MessageService.cpp.o -c ./src/MessageService/MessageService.cpp",
+>>>>>>> dev
   "file": "./src/MessageService/MessageService.cpp"
 },
 {
   "directory": "./src/build/MessageService",
+<<<<<<< HEAD
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MessageServiceServer.dir/__/shared/Utils.cpp.o -c ./src/shared/Utils.cpp",
+=======
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MessageServiceServer.dir/__/shared/Utils.cpp.o -c ./src/shared/Utils.cpp",
+>>>>>>> dev
   "file": "./src/shared/Utils.cpp"
 },
 {
   "directory": "./src/build/MockDatabase",
+<<<<<<< HEAD
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MockDatabaseClient.dir/MockDatabaseClient.cpp.o -c ./src/MockDatabase/MockDatabaseClient.cpp",
+=======
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MockDatabaseClient.dir/MockDatabaseClient.cpp.o -c ./src/MockDatabase/MockDatabaseClient.cpp",
+>>>>>>> dev
   "file": "./src/MockDatabase/MockDatabaseClient.cpp"
 },
 {
   "directory": "./src/build/MockDatabase",
+<<<<<<< HEAD
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MockDatabaseClient.dir/__/shared/Utils.cpp.o -c ./src/shared/Utils.cpp",
+=======
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MockDatabaseClient.dir/__/shared/Utils.cpp.o -c ./src/shared/Utils.cpp",
+>>>>>>> dev
   "file": "./src/shared/Utils.cpp"
 },
 {
   "directory": "./src/build/MockDatabase",
+<<<<<<< HEAD
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MockDatabase.dir/MockDatabase.cpp.o -c ./src/MockDatabase/MockDatabase.cpp",
+=======
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MockDatabase.dir/MockDatabase.cpp.o -c ./src/MockDatabase/MockDatabase.cpp",
+>>>>>>> dev
   "file": "./src/MockDatabase/MockDatabase.cpp"
 },
 {
   "directory": "./src/build/SanitizationService",
+<<<<<<< HEAD
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/SanitizationServiceServer.dir/SanitizationService.cpp.o -c ./src/SanitizationService/SanitizationService.cpp",
+=======
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/SanitizationServiceServer.dir/SanitizationService.cpp.o -c ./src/SanitizationService/SanitizationService.cpp",
+>>>>>>> dev
   "file": "./src/SanitizationService/SanitizationService.cpp"
 },
 {
   "directory": "./src/build/SanitizationService",
+<<<<<<< HEAD
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/SanitizationServiceServer.dir/SanitizationServiceServer.cpp.o -c ./src/SanitizationService/SanitizationServiceServer.cpp",
+=======
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/SanitizationServiceServer.dir/SanitizationServiceServer.cpp.o -c ./src/SanitizationService/SanitizationServiceServer.cpp",
+>>>>>>> dev
   "file": "./src/SanitizationService/SanitizationServiceServer.cpp"
 },
 {
   "directory": "./src/build/SanitizationService",
+<<<<<<< HEAD
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/SanitizationServiceServer.dir/__/shared/Utils.cpp.o -c ./src/shared/Utils.cpp",
+=======
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/SanitizationServiceServer.dir/__/shared/Utils.cpp.o -c ./src/shared/Utils.cpp",
+>>>>>>> dev
   "file": "./src/shared/Utils.cpp"
 },
 {
   "directory": "./src/build/Client",
+<<<<<<< HEAD
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/client.dir/client.cpp.o -c ./src/Client/client.cpp",
+=======
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/client.dir/client.cpp.o -c ./src/Client/client.cpp",
+>>>>>>> dev
   "file": "./src/Client/client.cpp"
 }
 ]

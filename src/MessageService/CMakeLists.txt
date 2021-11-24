@@ -1,6 +1,3 @@
-
-add_definitions(-DLOCALHOST)
-
 add_executable(
 		MessageServiceServer
 
@@ -11,7 +8,9 @@ add_executable(
 target_link_libraries(
 		MessageServiceServer
 
+PUBLIC
 		mock_message_board-cpp2
 		atomic
 		FBThrift::thriftcpp2
+		fb303
 )

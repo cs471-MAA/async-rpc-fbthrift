@@ -166,7 +166,7 @@
 },
 {
   "directory": "./src/build/Client",
-  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DLOCALHOST -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/client.dir/client.cpp.o -c ./src/Client/client.cpp",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/client.dir/client.cpp.o -c ./src/Client/client.cpp",
   "file": "./src/Client/client.cpp"
 }
 ]

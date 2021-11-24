@@ -18,8 +18,8 @@ namespace mock_message_board {
                                   public FacebookBase2 {
     public:
         explicit MessageServiceHandler()
-        : FacebookBase2("MessageService"), clientLoopThread_(new folly::ScopedEventBaseThread())  {
-        // : BaseService("MessageService"), clientLoopThread_(new folly::ScopedEventBaseThread())  {
+        : FacebookBase2("MessageService") {
+        // : BaseService("MessageService") {
             #ifdef LOCALHOST
                 addr1 = folly::SocketAddress("127.0.0.1", 10001, true); // mock database
                 addr2 = folly::SocketAddress("127.0.0.1", 10003, true); // sanitization
@@ -28,7 +28,7 @@ namespace mock_message_board {
                 addr2 = folly::SocketAddress("sanitization-service", 10003, true); // sanitization
             #endif
 
-            // fb303 counter
+            // fb303 counter example
             const auto p1 = std::chrono::system_clock::now();
             fb303::fbData->setCounter(
                 "start.date",

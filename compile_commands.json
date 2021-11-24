@@ -126,83 +126,47 @@
 },
 {
   "directory": "./src/build/MessageService",
-<<<<<<< HEAD
-  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MessageServiceServer.dir/MessageService.cpp.o -c ./src/MessageService/MessageService.cpp",
-=======
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MessageServiceServer.dir/MessageService.cpp.o -c ./src/MessageService/MessageService.cpp",
->>>>>>> dev
   "file": "./src/MessageService/MessageService.cpp"
 },
 {
   "directory": "./src/build/MessageService",
-<<<<<<< HEAD
-  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MessageServiceServer.dir/__/shared/Utils.cpp.o -c ./src/shared/Utils.cpp",
-=======
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MessageServiceServer.dir/__/shared/Utils.cpp.o -c ./src/shared/Utils.cpp",
->>>>>>> dev
   "file": "./src/shared/Utils.cpp"
 },
 {
   "directory": "./src/build/MockDatabase",
-<<<<<<< HEAD
-  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MockDatabaseClient.dir/MockDatabaseClient.cpp.o -c ./src/MockDatabase/MockDatabaseClient.cpp",
-=======
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MockDatabaseClient.dir/MockDatabaseClient.cpp.o -c ./src/MockDatabase/MockDatabaseClient.cpp",
->>>>>>> dev
   "file": "./src/MockDatabase/MockDatabaseClient.cpp"
 },
 {
   "directory": "./src/build/MockDatabase",
-<<<<<<< HEAD
-  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MockDatabaseClient.dir/__/shared/Utils.cpp.o -c ./src/shared/Utils.cpp",
-=======
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MockDatabaseClient.dir/__/shared/Utils.cpp.o -c ./src/shared/Utils.cpp",
->>>>>>> dev
   "file": "./src/shared/Utils.cpp"
 },
 {
   "directory": "./src/build/MockDatabase",
-<<<<<<< HEAD
-  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MockDatabase.dir/MockDatabase.cpp.o -c ./src/MockDatabase/MockDatabase.cpp",
-=======
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/MockDatabase.dir/MockDatabase.cpp.o -c ./src/MockDatabase/MockDatabase.cpp",
->>>>>>> dev
   "file": "./src/MockDatabase/MockDatabase.cpp"
 },
 {
   "directory": "./src/build/SanitizationService",
-<<<<<<< HEAD
-  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/SanitizationServiceServer.dir/SanitizationService.cpp.o -c ./src/SanitizationService/SanitizationService.cpp",
-=======
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/SanitizationServiceServer.dir/SanitizationService.cpp.o -c ./src/SanitizationService/SanitizationService.cpp",
->>>>>>> dev
   "file": "./src/SanitizationService/SanitizationService.cpp"
 },
 {
   "directory": "./src/build/SanitizationService",
-<<<<<<< HEAD
-  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/SanitizationServiceServer.dir/SanitizationServiceServer.cpp.o -c ./src/SanitizationService/SanitizationServiceServer.cpp",
-=======
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/SanitizationServiceServer.dir/SanitizationServiceServer.cpp.o -c ./src/SanitizationService/SanitizationServiceServer.cpp",
->>>>>>> dev
   "file": "./src/SanitizationService/SanitizationServiceServer.cpp"
 },
 {
   "directory": "./src/build/SanitizationService",
-<<<<<<< HEAD
-  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/SanitizationServiceServer.dir/__/shared/Utils.cpp.o -c ./src/shared/Utils.cpp",
-=======
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/SanitizationServiceServer.dir/__/shared/Utils.cpp.o -c ./src/shared/Utils.cpp",
->>>>>>> dev
   "file": "./src/shared/Utils.cpp"
 },
 {
   "directory": "./src/build/Client",
-<<<<<<< HEAD
-  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src/dep -I./src/shared -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/client.dir/client.cpp.o -c ./src/Client/client.cpp",
-=======
   "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_CONTEXT_DYN_LINK -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_PROGRAM_OPTIONS_DYN_LINK -DBOOST_REGEX_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DBOOST_THREAD_DYN_LINK -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -I./src -I./src/dep -I./src/shared -I./src/build -isystem /usr/include/libiberty    -std=gnu++17 -o CMakeFiles/client.dir/client.cpp.o -c ./src/Client/client.cpp",
->>>>>>> dev
   "file": "./src/Client/client.cpp"
 }
 ]

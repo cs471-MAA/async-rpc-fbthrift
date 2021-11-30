@@ -10,6 +10,7 @@
 #include <dep/if/gen-cpp2/SanitizationService.h>
 #include <dep/if/gen-cpp2/MessageService.h>
 #include <iostream>
+#include <chrono>
 
 using folly::AsyncSocket;
 using apache::thrift::ThriftServer;
@@ -24,8 +25,9 @@ using namespace std;
 folly::AsyncTransport::UniquePtr getSocket(folly::EventBase *evb, folly::SocketAddress const &addr);
 
 template <class T>
-std::unique_ptr<T> newRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr) {
+std::unique_ptr<T> newRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr, uint32_t timeout = 60000) {
     auto channel = RocketClientChannel::newChannel(folly::AsyncSocket::newSocket(evb, addr));
+    channel->setTimeout(timeout);
     channel->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);
     return std::make_unique<T>(std::move(channel));
 }
@@ -36,5 +38,7 @@ std::unique_ptr<ThriftServer> newServer(folly::SocketAddress const &addr, shared
     auto server = std::make_unique<ThriftServer>();
     server->setAddress(addr);
     server->setProcessorFactory(proc_factory);
+    server->setSocketWriteTimeout(8000ms);
+    
     return server;
 }

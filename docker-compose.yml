@@ -6,14 +6,14 @@ services:
         hostname: mock-database
         ports:
             - 10001:10001
-        command: ["/app/src/build/MockDatabase/MockDatabase"]
+        command: ["/app/src/build/MockDatabase/MockDatabase", "1", "8"]
 
     sanitization-service:
         image: saheru/fbthrift-benchmark
         hostname: sanitization-service
         ports:
             - 10003:10003
-        command: ["/app/src/build/SanitizationService/SanitizationServiceServer"]
+        command: ["/app/src/build/SanitizationService/SanitizationServiceServer", "1", "8"]
         depends_on:
             - mock-database
 
@@ -22,7 +22,7 @@ services:
         hostname: message-service
         ports:
             - 10002:10002
-        command: ["/app/src/build/MessageService/MessageServiceServer"]
+        command: ["/app/src/build/MessageService/MessageServiceServer", "1", "8"]
         depends_on:
             - mock-database
             - sanitization-service
@@ -30,8 +30,8 @@ services:
     client:
         image: saheru/fbthrift-benchmark
         hostname: client
-        # restart: always
-        command: ["/app/src/build/Client/client"]
+        restart: always
+        command: ["/app/src/build/Client/client", "64"]
         depends_on:
             - message-service
 
@@ -46,12 +46,12 @@ services:
     # mock-client:
     #     image: saheru/fbthrift-benchmark
     #     hostname: mock-client
-    #     restart: always
-    #     command: ["./src/build/MockDatabase/MockDatabaseClient"]
+    #     # restart: always
+    #     command: ["./src/build/MockDatabase/MockDatabaseClient", "100"]
 
     #     depends_on:
-    #         # - mock-database
-    #         - mock-database-middle
+    #         - mock-database
+    #         # - mock-database-middle
 
     # mock-database-middle:
     #     image: saheru/fbthrift-benchmark

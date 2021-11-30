@@ -1,7 +1,7 @@
 IMAGE_NAME=saheru/fbthrift-benchmark
 
 build-docker:
-	docker build -m 4G -t ${IMAGE_NAME} .
+	docker build -m 6G -t ${IMAGE_NAME} .
 
 build-and-copy-docker: build-docker copy-docker-build
 

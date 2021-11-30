@@ -21,13 +21,13 @@ namespace mock_message_board {
         void find_last_message(string& result, unique_ptr<string> client_id) override{
             auto end = std::chrono::system_clock::now();
             std::chrono::duration<double> elapsed_seconds = end - start;
-            cout << "mock-database|find_last_message: received find last message rpc with " << *client_id << " at " << elapsed_seconds.count() << "s." << endl;
+            cout << "mock-database   | find_last_message: from " << *client_id << " at " << elapsed_seconds.count() << "s." << endl;
             
             //this_thread::sleep_for(120ms);
 
             if (last_messages.find(*client_id) == last_messages.end()){
             // if (last_messages.contains(*client_id)){
-                result = "WARNING: This user " + *client_id + " didn't post any message or doesn't exit...";
+                result = "WARNING: This user " + *client_id + " didn't post any message or doesn't exist...";
             } else {
                 result = last_messages[*client_id];
             }
@@ -35,19 +35,19 @@ namespace mock_message_board {
 
             end = std::chrono::system_clock::now();
             elapsed_seconds = end - start;
-            cout << "mock-database|find_last_message: rpc treated - to find " << *client_id << "'s message at " << elapsed_seconds.count() << "s." << endl;
+            cout << "\tMessage found from " << *client_id << " at " << elapsed_seconds.count() << "s." << endl;
         }
         // folly::Future<std::unique_ptr<::std::string>> future_find_last_message(std::unique_ptr<::std::string> p_client_id) override;
         // folly::SemiFuture<std::unique_ptr<::std::string>> semifuture_find_last_message(std::unique_ptr<::std::string> p_client_id) override;
         // void async_tm_find_last_message(std::unique_ptr<apache::thrift::HandlerCallback<std::unique_ptr<::std::string>>> callback, std::unique_ptr<::std::string> p_client_id) override;
         
         bool store_message(unique_ptr<string> client_id, unique_ptr<string> message) override {
-            cout << "mock-database|store_message: received store message rpc with " << *client_id << endl;
+            cout << "mock-database   | store_message:" << *message << " from " << *client_id << endl;
             //this_thread::sleep_for(200ms);
 
             last_messages[*client_id] = *message;
             
-            cout << "mock-database|store_message: rpc treated - to store " << *message  << " of " << *client_id <<  endl;
+            cout << "\tMessage stored: " << *message  << " from " << *client_id <<  endl;
             return true;
         }
         // folly::Future<bool> future_store_message(std::unique_ptr<::std::string> p_client_id, std::unique_ptr<::std::string> p_message) override;

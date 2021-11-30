@@ -12,6 +12,7 @@
 #include <chrono>
 #include <ctime>
 #include <iostream>
+#include <thread>
 
 #include <dep/if/gen-cpp2/MessageService.h>
 #include "Utils.h"
@@ -26,16 +27,22 @@ using folly::ThreadedExecutor;
 using mock_message_board::MessageServiceAsyncClient;
 using namespace std;
 
+int find_success_counter = 0;
+int send_success_counter = 0;
 void onReply(string message) {
+    cout << "\tResponse received: " << message << endl;
     LOG(INFO) << "client: get response " << message;
+    find_success_counter += 1;
 }
 
-
 void onStoreReply(bool resp) {
-    LOG(INFO) << "client: get response " << resp;
+    cout << "\tStore status: " << ((resp) ? "True" : "False") << endl;
+    LOG(INFO) << "client: get response " << ((resp) ? "True" : "False");
+    send_success_counter += 1;
 }
 
 void onError(std::exception const &e) {
+    cerr << "\tError: " << e.what() << endl;
     LOG(ERROR) << "client: error: " << e.what();
 }
 
@@ -51,9 +58,7 @@ int main(int argc, char *argv[]) {
     iterations = (iterations > 0) ? iterations : 10000;
     string client_id = (argc > ++i) ? argv[i] : "Albert";
     string message = (argc > ++i) ? argv[i] : "TEST MESSAGE";
-    // create event runloop, to run on this thread
-    folly::EventBase eb;
-
+    uint32_t timeout = (argc > ++i) ? stoi(argv[i]) : 90000; //ms
 
     #ifdef LOCALHOST
         folly::SocketAddress addr("127.0.0.1", 10002, true);
@@ -61,14 +66,17 @@ int main(int argc, char *argv[]) {
         folly::SocketAddress addr("message-service", 10002, true);
     #endif
 
+    // create event runloop, to run on this thread
+    folly::EventBase eb;
+
     // creating client
-    auto client = newRocketClient<MessageServiceAsyncClient>(&eb, addr);
+    auto client = newRocketClient<MessageServiceAsyncClient>(&eb, addr, timeout);
     auto start = std::chrono::system_clock::now();
     std::vector<folly::Future<folly::Unit>> futs;
     for (int32_t i = 0; i < iterations; i++) {
 
         // LOG(INFO) << "client: sending call " << i;
-        cout << "client: sending call " << i << endl;
+        cout << "client          | sending call " << i << endl;
 
         #ifdef SYNC
             string result;
@@ -78,9 +86,11 @@ int main(int argc, char *argv[]) {
                 auto f = client->future_find_last_message(client_id);
                 futs.push_back(std::move(f).thenValue(onReply).thenError<std::exception>(onError));
             } else {
+                
                 auto f = client->future_send_message(client_id, message);
                 futs.push_back(std::move(f).thenValue(onStoreReply).thenError<std::exception>(onError));
             }
+            // this_thread::sleep_for(30ms); //Just for an old test
         #endif
 
 
@@ -88,10 +98,11 @@ int main(int argc, char *argv[]) {
         // Some computation here
         auto end = std::chrono::system_clock::now();
         std::chrono::duration<double> elapsed_seconds = end - start;
-        cout << "client: sent call " << elapsed_seconds.count() << "s" << endl;
+        cout << "client          | sent call at " << elapsed_seconds.count() << "s" << endl;
         LOG(INFO) << "client: sent call " << elapsed_seconds.count() << "s" << endl;
     }
     folly::ThreadedExecutor executor;
+
     std::move(collectAll(futs.begin(), futs.end())).via(&executor).thenValue([&eb](std::vector<folly::Try<folly::Unit>> &&v) {
         LOG(ERROR) << "client: received all responses";
         eb.terminateLoopSoon();
@@ -103,7 +114,15 @@ int main(int argc, char *argv[]) {
 
     auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
-    cout << "client: Finished " << elapsed_seconds.count() << "s" << endl;
+    cout << "client          | Finished " << elapsed_seconds.count() << "s" << endl;
+    int find_iterations = iterations/2;
+    int send_iterations = iterations - find_iterations;
+
+    cout << "client          | Received " << 
+        send_success_counter << "/" << send_iterations << " successful send message calls." << endl;
+    cout << "client          | Received " << 
+        find_success_counter << "/" << find_iterations  << " successful find message calls." << endl;
+        
 
     return 0;
 }

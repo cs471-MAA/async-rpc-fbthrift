@@ -26,38 +26,38 @@ void mock_message_board::MessageServiceHandler::find_last_message(::std::string&
         (int64_t) std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count()
     );
 
-    std::cout << "message-service | find_last_message: client_id=" << *client_id << std::endl;
+    M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "find_last_message: client_id=" << *client_id);
 
     auto search = dbMap.find(std::this_thread::get_id());
     if(search == dbMap.end()){
         auto *eb = new folly::EventBase();
-        cout << "\tNew client for thread ID " << std::this_thread::get_id() << ": sending..."  << "\n";
+        M_DEBUG_OUT("\tNew client for thread ID " << std::this_thread::get_id() << ": sending...");
 
         dbMap.insert({std::this_thread::get_id(), newRocketClient<MockDatabaseAsyncClient>(eb, addr1, MSGSERV_MOCK_TIMEOUT)})
                 .first->second->sync_find_last_message(result, *client_id);
     }else{
-        cout << "\tThread ID " << std::this_thread::get_id() << ": sending..."  << "\n";
+        M_DEBUG_OUT("\tThread ID " << std::this_thread::get_id() << ": sending...");
         search->second->sync_find_last_message(result, *client_id);
     }
 
-    cout << "\tThread ID " << std::this_thread::get_id() << ": received!" << "\n";
+    M_DEBUG_OUT("\tThread ID " << std::this_thread::get_id() << ": received!");
 }
 
 bool mock_message_board::MessageServiceHandler::send_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) {
-    std::cout << "message-service | send_message: client_id=" << *client_id << " | message=" << *message << std::endl;
+    M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "send_message: client_id=" << *client_id << " | message=" << *message);
 
     auto search = sanMap.find(std::this_thread::get_id());
     bool res = false;
     if(search == sanMap.end()){
         auto *eb = new folly::EventBase();
-        cout << "\tNew client for thread ID " << std::this_thread::get_id() << ": sending..."  << "\n";
+        M_DEBUG_OUT("\tNew client for thread ID " << std::this_thread::get_id() << ": sending...");
 
         res = sanMap.insert({std::this_thread::get_id(), newRocketClient<SanitizationServiceAsyncClient>(eb, addr2, MSGSERV_SANIT_TIMEOUT)})
         .first->second->sync_sanitize_message(*client_id, *message);
     }else{
-        cout << "\tThread ID " << std::this_thread::get_id() << ": sending..."  << "\n";
+        M_DEBUG_OUT("\tThread ID " << std::this_thread::get_id() << ": sending...");
         res = search->second->sync_sanitize_message(*client_id, *message);
     }
-    cout << "\tThread ID " << std::this_thread::get_id() << ": received!" << "\n";
+    M_DEBUG_OUT("\tThread ID " << std::this_thread::get_id() << ": received!");
     return res;
 }

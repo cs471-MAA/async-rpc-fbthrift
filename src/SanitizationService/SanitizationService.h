@@ -3,6 +3,7 @@
 #include "folly/io/async/ScopedEventBaseThread.h"
 #include <Utils.h>
 
+const string SANIT_PREFIX = "mock-database   | ";
 
 namespace mock_message_board {
 

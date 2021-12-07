@@ -11,6 +11,7 @@ namespace fb303 = facebook::fb303;
 
 using facebook::fb303::FacebookBase2;
 
+const string MESSAGE_SERVICE_PREFIX = "message-service | ";
 
 namespace mock_message_board {
     class MessageServiceHandler : virtual public MessageServiceSvIf,
@@ -20,13 +21,9 @@ namespace mock_message_board {
         explicit MessageServiceHandler()
         : FacebookBase2("MessageService") {
         // : BaseService("MessageService") {
-            #ifdef LOCALHOST
-                addr1 = folly::SocketAddress("127.0.0.1", 10001, true); // mock database
-                addr2 = folly::SocketAddress("127.0.0.1", 10003, true); // sanitization
-            #else 
-                addr1 = folly::SocketAddress("mock-database", 10001, true); // mock database
-                addr2 = folly::SocketAddress("sanitization-service", 10003, true); // sanitization
-            #endif
+
+            addr1 = M_GET_SOCKET_ADDRESS("mock-database", 10001);
+            addr2 = M_GET_SOCKET_ADDRESS("sanitization-service", 10003);
 
             // fb303 counter example
             const auto p1 = std::chrono::system_clock::now();
@@ -34,13 +31,13 @@ namespace mock_message_board {
                 "start.date",
                 (int64_t) std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count()
             );
-            fb303::fbData->setCounter(
-                "start.date",
-                (int64_t) 2
-            );
-            fb303::fbData->addStatValue("nb_requests", 1, fb303::SUM);
-            fb303::fbData->addStatValue("nb_requests", 1, fb303::SUM);
-            fb303::fbData->addStatValue("nb_requests", 1, fb303::SUM);
+            // fb303::fbData->setCounter(
+            //     "start.date",
+            //     (int64_t) 2
+            // );
+            // fb303::fbData->addStatValue("nb_requests", 1, fb303::SUM);
+            // fb303::fbData->addStatValue("nb_requests", 1, fb303::SUM);
+            // fb303::fbData->addStatValue("nb_requests", 1, fb303::SUM);
         }
         ~MessageServiceHandler() {
         }

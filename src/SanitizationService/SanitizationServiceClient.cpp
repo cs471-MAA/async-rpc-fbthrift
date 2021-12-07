@@ -51,11 +51,7 @@ int main(int argc, char *argv[]) {
 
     // create event runloop, to run on this thread
     folly::EventBase eb;
-    #ifdef LOCALHOST
-        folly::SocketAddress addr("127.0.0.1", 10002, true);
-    #else
-        folly::SocketAddress addr("sanitization-service", 10002, true);
-    #endif
+    folly::SocketAddress addr = M_GET_SOCKET_ADDRESS("sanitization-service", 10002);
 
     // test messages
     const string messages[5] = {

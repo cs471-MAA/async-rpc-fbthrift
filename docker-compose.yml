@@ -30,10 +30,20 @@ services:
     client:
         image: saheru/fbthrift-benchmark
         hostname: client
-        restart: always
-        command: ["/app/src/build/Client/client", "64"]
+        # restart: always
+        command: ["/app/src/build/Client/client", "50"]
         depends_on:
             - message-service
+
+    # mock-client:
+    #     image: saheru/fbthrift-benchmark
+    #     hostname: mock-client
+    #     restart: always
+    #     command: ["./src/build/MockDatabase/MockDatabaseClient", "100"]
+
+    #     depends_on:
+    #         - mock-database
+    #         # - mock-database-middle
 
     # sanitization-service-client:
     #     image: saheru/fbthrift-benchmark
@@ -43,15 +53,6 @@ services:
     #     depends_on:
     #         - sanitization-service
 
-    # mock-client:
-    #     image: saheru/fbthrift-benchmark
-    #     hostname: mock-client
-    #     # restart: always
-    #     command: ["./src/build/MockDatabase/MockDatabaseClient", "100"]
-
-    #     depends_on:
-    #         - mock-database
-    #         # - mock-database-middle
 
     # mock-database-middle:
     #     image: saheru/fbthrift-benchmark

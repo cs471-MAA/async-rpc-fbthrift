@@ -6,17 +6,17 @@
 using mock_message_board::SanitizationHandler;
 
 int main(int argc, char *argv[]) {
+    // ======================= INIT ======================= //
     // FLAGS_logtostderr = 1;
     folly::init(&argc, &argv);
 
     int i = 0;
     int iothreads = (argc > ++i) ? stoi(argv[i]) : 0;
     int cputhreads = (argc > ++i) ? stoi(argv[i]) : 0;
-    #ifdef LOCALHOST
-        folly::SocketAddress addr("127.0.0.1", 10003, true);
-    #else
-        folly::SocketAddress addr("sanitization-service", 10003, true);
-    #endif
+
+    // ======================= SERVER SETUP ======================= //
+
+    folly::SocketAddress addr = M_GET_SOCKET_ADDRESS("sanitization-service", 10003);
 
     auto server = newServer(addr, std::make_shared<SanitizationHandler>());
     
@@ -25,7 +25,8 @@ int main(int argc, char *argv[]) {
     if (cputhreads > 0)
         server->setNumCPUWorkerThreads(cputhreads);
 
-    LOG(INFO) << "server: starts";
+    // ======================= SERVER STARTS ======================= //
+    M_DEBUG_OUT(SANIT_PREFIX << "starts");
     server->serve();
 
     return 0;

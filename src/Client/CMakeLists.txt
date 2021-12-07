@@ -10,4 +10,5 @@ target_link_libraries(
 	mock_message_board-cpp2
 	atomic
 	FBThrift::thriftcpp2
+	fb303
 )

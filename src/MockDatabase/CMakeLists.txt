@@ -25,6 +25,7 @@ target_link_libraries(
 	mock_message_board-cpp2
 	atomic
 	FBThrift::thriftcpp2
+	fb303
 )
 
 # add_executable(
@@ -52,6 +53,7 @@ target_link_libraries(
 	mock_message_board-cpp2
 	atomic
 	FBThrift::thriftcpp2
+	fb303
 )
 
 # install(TARGETS server DESTINATION /usr/bin/)

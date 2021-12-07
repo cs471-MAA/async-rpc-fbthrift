@@ -12,7 +12,7 @@ uint32_t SANIT_MOCK_TIMEOUT = 20000;
 using mock_message_board::MessageServiceAsyncClient;
 
 bool mock_message_board::SanitizationHandler::sanitize_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) {
-    std::cout << "sanitization    | sanitize_message: received client_id=" << *client_id << " | message=" << *message << std::endl;
+    M_DEBUG_OUT(SANIT_PREFIX << "sanitize_message: received client_id=" << *client_id << " | message=" << *message);
 
     std::regex match_expr("^.*[\\/*$^].*$");
     if (std::regex_match(*message, match_expr)) {
@@ -23,23 +23,19 @@ bool mock_message_board::SanitizationHandler::sanitize_message(std::unique_ptr<:
     bool res = false;
     if(search == dbMap.end()){
         auto *eb = new folly::EventBase();
-        cout << "\tNew client for thread ID " << std::this_thread::get_id() << ": sending..." << "\n";
+        M_DEBUG_OUT("\tNew client for thread ID " << std::this_thread::get_id() << ": sending...");
         res = dbMap.insert({std::this_thread::get_id(), newRocketClient<MockDatabaseAsyncClient>(eb, addr, SANIT_MOCK_TIMEOUT)})
                 .first->second->sync_store_message(*client_id, *message); 
     }else{
-        cout << "\tThread ID " << std::this_thread::get_id() << ": sending..." << "\n";
+        M_DEBUG_OUT("\tThread ID " << std::this_thread::get_id() << ": sending...");
         res = search->second->sync_store_message(*client_id, *message);
     }
-    cout << "\tThread ID " << std::this_thread::get_id() << ": received!" << "\n";
+    M_DEBUG_OUT("\tThread ID " << std::this_thread::get_id() << ": received!");
     return res;
 }
 
 mock_message_board::SanitizationHandler::SanitizationHandler() {
-    #ifdef LOCALHOST
-        addr = folly::SocketAddress("127.0.0.1", 10001, true); // mock database
-    #else
-        addr = folly::SocketAddress("mock-database", 10001, true); // mock database
-    #endif
+    addr = M_GET_SOCKET_ADDRESS("mock-database", 10001);
 }
 
 mock_message_board::SanitizationHandler::~SanitizationHandler() {

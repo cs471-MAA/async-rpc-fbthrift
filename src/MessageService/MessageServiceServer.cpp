@@ -14,19 +14,19 @@ namespace fb303 = facebook::fb303;
 using mock_message_board::MessageServiceHandler;
 
 int main(int argc, char** argv) {
+    // ======================= INIT ======================= //
+
     // FLAGS_logtostderr = 1;
     folly::init(&argc, &argv);
-
+    
     int i = 0;
     int iothreads = (argc > ++i) ? stoi(argv[i]) : 0;
     int cputhreads = (argc > ++i) ? stoi(argv[i]) : 0;
     
-    #ifdef LOCALHOST
-        folly::SocketAddress addr("127.0.0.1", 10002, true);
-    #else
-        folly::SocketAddress addr("message-service", 10002, true);
-    #endif
+    // ======================= SERVER SETUP ======================= //
 
+    folly::SocketAddress addr = M_GET_SOCKET_ADDRESS("message-service", 10002);
+    
     auto server = newServer(addr, std::make_shared<MessageServiceHandler>());
 
     if (iothreads > 0)
@@ -34,25 +34,20 @@ int main(int argc, char** argv) {
     if (cputhreads > 0)
         server->setNumCPUWorkerThreads(cputhreads);
 
-    LOG(INFO) << "server: start";
 
     // fb303 stuff
     auto counters = fb303::fbData->getCounters();
-    std::cout << "server: # of counters=" << static_cast<long unsigned>(counters.size()) << std::endl;
+    M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "# of counters=" << static_cast<long unsigned>(counters.size()));
     for (auto item : counters) {
-        std::cout << "server: counter=" << item.first << " | value=" << item.second << std::endl;
+        M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "counter=" << item.first << " | value=" << item.second);
     }
 
-    auto dyn_counters = fb303::fbData->getDynamicCounters();
-    std::cout << "server: # of dynamic counters=" << static_cast<long unsigned>(counters.size()) << std::endl;
-    for (auto item : counters) {
-        std::cout << "server: dynamic counter=" << item.first << " | value=" << item.second << std::endl;
-    }
-
+    // ======================= SERVER STARTS ======================= //
+    M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "start");
     // run server
     server->serve();
     
-    LOG(INFO) << "server: end";
+    M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "end");
 
     return 0;
 }

@@ -108,6 +108,7 @@ add_fbthrift_cpp_library(
 include_directories(dep)
 include_directories(shared)
 
+add_subdirectory(shared)
 add_subdirectory(MessageService)
 add_subdirectory(MockDatabase)
 add_subdirectory(SanitizationService)

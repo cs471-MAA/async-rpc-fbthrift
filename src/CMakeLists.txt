@@ -42,6 +42,9 @@ if(LOCALHOST)
   add_definitions(-DLOCALHOST)
   message(STATUS
         "The code will be compiled for localhost.")
+else()
+  message(STATUS
+        "The code will be compiled for docker.")
 endif()
 
 option(OPTI3 "Will create a optimized code level 3." OFF)
@@ -87,8 +90,12 @@ add_fbthrift_cpp_library(
   fb303_cpp2
   common/fb303/if/fb303.thrift
   SERVICES
-  FacebookService
+    FacebookService
 )
+
+# TODO: these two lines might not be necessary
+#set(THRIFT1 "/usr/local/bin/thrift1")
+#set(THRIFTCPP2 "/usr/local/lib/libthriftcpp2.a")
 
 add_fbthrift_cpp_library(
   mock_message_board-cpp2
@@ -104,6 +111,7 @@ add_fbthrift_cpp_library(
 include_directories(dep)
 include_directories(shared)
 
+add_subdirectory(shared)
 add_subdirectory(MessageService)
 add_subdirectory(MockDatabase)
 add_subdirectory(SanitizationService)

@@ -18,6 +18,8 @@ add_executable(
 	MockDatabase
 
 	MockDatabase.cpp
+	../shared/Utils.cpp
+	../shared/ServerStats.cpp
 )
 target_link_libraries(
 	MockDatabase
@@ -46,6 +48,7 @@ add_executable(
 
 	MockDatabaseClient.cpp
 	../shared/Utils.cpp
+	../shared/ServerStats.cpp
 )
 target_link_libraries(
 	MockDatabaseClient

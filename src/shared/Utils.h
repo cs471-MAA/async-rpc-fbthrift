@@ -3,63 +3,29 @@
 //
 #pragma once
 
-
 #include <glog/logging.h>
 #include <folly/io/async/AsyncSocket.h>
 #include <folly/Unit.h>
 #include <thrift/lib/cpp2/server/ThriftServer.h>
-#include <thrift/lib/cpp2/async/RocketClientChannel.h>
-#include <thrift/lib/cpp2/async/HeaderClientChannel.h>
+#include "thrift/lib/cpp2/async/HeaderClientChannel.h"
 #include <dep/if/gen-cpp2/MockDatabase.h>
 #include <dep/if/gen-cpp2/SanitizationService.h>
 #include <dep/if/gen-cpp2/MessageService.h>
 #include <iostream>
 #include <chrono>
-
-#include <thrift/lib/cpp2/async/RocketClientChannel.h>
-
+#include <string>
+#include <thread>
+#include <unistd.h>
+#include <cstdio>
 #include <memory>
-#include <utility>
-
-#include <fmt/core.h>
-#include <folly/ExceptionString.h>
-#include <folly/GLog.h>
-#include <folly/Likely.h>
-#include <folly/Memory.h>
-#include <folly/Range.h>
-#include <folly/Try.h>
-#include <folly/compression/Compression.h>
-#include <folly/fibers/FiberManager.h>
-#include <folly/io/IOBuf.h>
-#include <folly/io/IOBufQueue.h>
-#include <folly/io/async/AsyncTransport.h>
-#include <folly/io/async/EventBase.h>
-#include <folly/io/async/Request.h>
-
-#include <thrift/lib/cpp/TApplicationException.h>
-#include <thrift/lib/cpp/protocol/TBase64Utils.h>
-#include <thrift/lib/cpp/transport/THeader.h>
-#include <thrift/lib/cpp2/Flags.h>
-#include <thrift/lib/cpp2/async/HeaderChannel.h>
-#include <thrift/lib/cpp2/async/RequestChannel.h>
-#include <thrift/lib/cpp2/async/ResponseChannel.h>
-#include <thrift/lib/cpp2/async/RpcTypes.h>
-#include <thrift/lib/cpp2/protocol/CompactProtocol.h>
-#include <thrift/lib/cpp2/protocol/Protocol.h>
-#include <thrift/lib/cpp2/protocol/Serializer.h>
-#include <thrift/lib/cpp2/transport/core/EnvelopeUtil.h>
-#include <thrift/lib/cpp2/transport/core/RpcMetadataUtil.h>
-#include <thrift/lib/cpp2/transport/core/ThriftClientCallback.h>
-#include <thrift/lib/cpp2/transport/core/TryUtil.h>
-#include <thrift/lib/cpp2/transport/rocket/PayloadUtils.h>
-#include <thrift/lib/cpp2/transport/rocket/RocketException.h>
-#include <thrift/lib/cpp2/transport/rocket/client/RocketClient.h>
-#include <thrift/lib/thrift/gen-cpp2/RpcMetadata_constants.h>
-#include <thrift/lib/thrift/gen-cpp2/RpcMetadata_types.h>
+#include <stdexcept>
+#include <array>
+#include <signal.h>
+#include <stdlib.h>
 
 using folly::AsyncSocket;
 using apache::thrift::ThriftServer;
-using apache::thrift::RocketClientChannel;
+using apache::thrift::HeaderClientChannel;
 using apache::thrift::ThriftServerAsyncProcessorFactory;
 using mock_message_board::MockDatabaseAsyncClient;
 using mock_message_board::SanitizationServiceAsyncClient;
@@ -98,13 +64,32 @@ using namespace std;
     #define M_GET_SOCKET_ADDRESS(ADDRESS, PORT) folly::SocketAddress(ADDRESS, PORT, true)
 #endif
 
+#ifdef LOCALHOST
+    #define STATS_FILES_DIR "/home/adrien/Documents/epfl/MA/cs-471/project/stats_files/"
+#else
+    #define STATS_FILES_DIR "/app/src/build/stats_files/"
+#endif
+
+
+// https://stackoverflow.com/questions/478898/how-do-i-execute-a-command-and-get-the-output-of-the-command-within-c-using-po
+string exec(const char* cmd);
+
+uint64_t generate_local_uid();
+
+uint64_t get_query_uid(uint64_t local_uid, uint64_t query_number);
+
+uint64_t get_epoch_time_us();
+
 folly::AsyncTransport::UniquePtr getSocket(folly::EventBase *evb, folly::SocketAddress const &addr);
+
+void sigint_catcher(void (*handler)(int));
+
 
 template <class T>
 std::unique_ptr<T> newRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr, uint32_t timeout = 60000) {
-    auto channel = RocketClientChannel::newChannel(folly::AsyncSocket::newSocket(evb, addr));
+    auto channel = HeaderClientChannel::newChannel(folly::AsyncSocket::newSocket(evb, addr));
     channel->setTimeout(timeout);
-    channel->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);
+    //channel->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);
     return std::make_unique<T>(std::move(channel));
 }
 
@@ -118,3 +103,4 @@ std::unique_ptr<ThriftServer> newServer(folly::SocketAddress const &addr, shared
     
     return server;
 }
+

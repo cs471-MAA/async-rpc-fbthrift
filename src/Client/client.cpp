@@ -17,6 +17,7 @@
 
 #include <dep/if/gen-cpp2/MessageService.h>
 #include "Utils.h"
+#include "ServerStats.h"
 
 namespace fb303 = facebook::fb303;
 using apache::thrift::ThriftServer;
@@ -33,15 +34,20 @@ const string CLIENT_PREFIX = "client          | ";
 
 int find_success_counter = 0;
 int send_success_counter = 0;
+ServerStatsManager client_stat_manager(STATS_FILES_DIR"client_stats.csv");
 
-void onFindReply(const string& message) {
+void onFindReply(string message) {
     M_DEBUG_OUT("\tResponse received: " << message);
     find_success_counter += 1;
+    // uint64_t epoch_time_ms = chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    // client_stat_manager.add_entry(query_uid, epoch_time_ms);
 }
 
 void onSendReply(bool resp) {
     M_DEBUG_OUT("\tSend status: " << ((resp) ? "True" : "False"));
     send_success_counter += 1;
+    // uint64_t epoch_time_ms = chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    // client_stat_manager.add_entry(query_uid, epoch_time_ms);
 }
 
 void onError(std::exception const &e) {
@@ -52,7 +58,6 @@ void client_summary(std::chrono::duration<double> elapsed_seconds, int iteration
 
 int main(int argc, char *argv[]) {
     // ======================= INIT ======================= //
-
     google::InitGoogleLogging(argv[0]);
     google::SetCommandLineOption("GLOG_minloglevel", "0"); // INFO
     M_DEBUG_OUT(CLIENT_PREFIX << "Starting Client ...");
@@ -74,28 +79,30 @@ int main(int argc, char *argv[]) {
 
     // creating client
     auto client = newRocketClient<MessageServiceAsyncClient>(&eb, addr, timeout);
-    auto start = std::chrono::system_clock::now();
+    uint64_t client_uid = generate_local_uid();
 
     // ======================= SENDING CALLS ======================= //
-
+    
     std::vector<folly::Future<folly::Unit>> futs;
+    auto start = std::chrono::system_clock::now();
     for (int32_t i = 0; i < iterations; i++) {
-
+        uint64_t query_uid = get_query_uid(client_uid, i);
         M_DEBUG_OUT(CLIENT_PREFIX << "sending call " << i);
+        client_stat_manager.add_entry(query_uid, get_epoch_time_us());
 
         #ifdef SYNC
             if (i % 2 == 1){
                 string result;
-                client->sync_find_last_message(result, client_id);
+                client->sync_find_last_message(result, client_id, query_uid);
             } else {
-                client->sync_send_message(client_id, message);
+                client->sync_send_message(client_id, message, query_uid);
             }
         #else
             if (i % 2 == 1){
-                auto f = client->future_find_last_message(client_id);
+                auto f = client->future_find_last_message(client_id, query_uid);
                 futs.push_back(std::move(f).thenValue(onFindReply).thenError<std::exception>(onError));
             } else {
-                auto f = client->future_send_message(client_id, message);
+                auto f = client->future_send_message(client_id, message, query_uid);
                 futs.push_back(std::move(f).thenValue(onSendReply).thenError<std::exception>(onError));
             }
         #endif

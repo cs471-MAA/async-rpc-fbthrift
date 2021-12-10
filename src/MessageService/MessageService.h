@@ -21,7 +21,7 @@ namespace mock_message_board {
     public:
         ServerStatsManager manager;
         explicit MessageServiceHandler()
-        : FacebookBase2("MessageService"), manager("message_service_stats.csv"){
+        : FacebookBase2("MessageService"), manager(STATS_FILES_DIR"message_service_stats.csv"){
         // : BaseService("MessageService") {
             addr1 = M_GET_SOCKET_ADDRESS("mock-database", 10001);
             addr2 = M_GET_SOCKET_ADDRESS("sanitization-service", 10003);

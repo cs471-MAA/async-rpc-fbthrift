@@ -38,7 +38,7 @@ bool mock_message_board::SanitizationHandler::sanitize_message(std::unique_ptr<:
 }
 
 mock_message_board::SanitizationHandler::SanitizationHandler() : 
-    manager("sanitization_service_stats.csv") 
+    manager(STATS_FILES_DIR"sanitization_service_stats.csv") 
     {
     addr = M_GET_SOCKET_ADDRESS("mock-database", 10001);
 }

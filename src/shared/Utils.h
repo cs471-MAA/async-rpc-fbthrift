@@ -64,6 +64,7 @@ using namespace std;
     #define M_GET_SOCKET_ADDRESS(ADDRESS, PORT) folly::SocketAddress(ADDRESS, PORT, true)
 #endif
 
+#define STATS_FILES_DIR "/app/src/build/stats_files/"
 
 
 // https://stackoverflow.com/questions/478898/how-do-i-execute-a-command-and-get-the-output-of-the-command-within-c-using-po

@@ -7,3 +7,4 @@ Dockerfile
 src/.cache
 src/build
 src/dep/if/gen-cpp2
+container_files

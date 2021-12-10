@@ -29,7 +29,7 @@ namespace mock_message_board {
         MockDatabaseHandler(std::chrono::microseconds waiting_time = 10us) : 
             start(std::chrono::system_clock::now()), 
             waiting_time(waiting_time), 
-            manager("mock_database_stats.csv") {}
+            manager(STATS_FILES_DIR"mock_database_stats.csv") {}
 
         void find_last_message(string& result, unique_ptr<string> client_id, int64_t query_uid) override{
             manager.add_entry(query_uid, get_epoch_time_us());

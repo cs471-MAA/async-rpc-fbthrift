@@ -6,34 +6,52 @@ services:
         hostname: mock-database
         ports:
             - 10001:10001
-        command: ["/app/src/build/MockDatabase/MockDatabase", "1", "8"]
+        entrypoint: 
+            ["/app/src/build/MockDatabase/MockDatabase", "1", "8"]
+        volumes:
+          - ./container_files:/app/src/build/stats_files:rw
+        stop_signal: SIGINT
 
     sanitization-service:
         image: saheru/fbthrift-benchmark
         hostname: sanitization-service
         ports:
             - 10003:10003
-        command: ["/app/src/build/SanitizationService/SanitizationServiceServer", "1", "8"]
+        entrypoint: 
+            ["/app/src/build/SanitizationService/SanitizationServiceServer", "1", "8"]
         depends_on:
             - mock-database
+        volumes:
+          - ./container_files:/app/src/build/stats_files:rw
+        stop_signal: SIGINT
 
     message-service:
         image: saheru/fbthrift-benchmark
         hostname: message-service
         ports:
             - 10002:10002
-        command: ["/app/src/build/MessageService/MessageServiceServer", "1", "8"]
+        entrypoint: 
+            ["/app/src/build/MessageService/MessageServiceServer", "1", "8"]
         depends_on:
             - mock-database
             - sanitization-service
+        volumes:
+          - ./container_files:/app/src/build/stats_files:rw
+        stop_signal: SIGINT
 
     client:
         image: saheru/fbthrift-benchmark
         hostname: client
         # restart: always
-        command: ["/app/src/build/Client/client", "50"]
+        entrypoint: 
+            ["/app/src/build/Client/client", "50"]
         depends_on:
             - message-service
+        volumes:
+          - ./container_files:/app/src/build/stats_files:rw
+        stop_signal: SIGINT
+          
+
 
     # mock-client:
     #     image: saheru/fbthrift-benchmark

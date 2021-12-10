@@ -34,7 +34,7 @@ const string MOCK_CLIENT_PREFIX = "mock-client     | ";
 
 int find_success_counter = 0;
 int send_success_counter = 0;
-ServerStatsManager client_stat_manager("mock_client_stats.csv");
+ServerStatsManager client_stat_manager(STATS_FILES_DIR"mock_client_stats.csv");
 
 void onFindReply(string message) {
     M_DEBUG_OUT("\tResponse received: " << message);

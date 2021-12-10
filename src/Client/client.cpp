@@ -34,7 +34,7 @@ const string CLIENT_PREFIX = "client          | ";
 
 int find_success_counter = 0;
 int send_success_counter = 0;
-ServerStatsManager client_stat_manager("client_stats.csv");
+ServerStatsManager client_stat_manager(STATS_FILES_DIR"client_stats.csv");
 
 void onFindReply(string message) {
     M_DEBUG_OUT("\tResponse received: " << message);

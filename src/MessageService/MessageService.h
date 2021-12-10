@@ -30,20 +30,25 @@ namespace mock_message_board {
                 "start.date",
                 (int64_t) std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count()
             );
+
+            dbClient = newRocketClient<MockDatabaseAsyncClient>(&eb, addr1, MSGSERV_MOCK_TIMEOUT);
+
         }
-        ~MessageServiceHandler() {}
+        ~MessageServiceHandler() override {
+            eb.terminateLoopSoon();
+        }
 
         // RPCs
-        //void find_last_message(::std::string& result, std::unique_ptr<::std::string> client_id) override;
-        folly::Future<std::unique_ptr<::std::string>> future_find_last_message(std::unique_ptr<::std::string> p_client_id) override;
-        //bool send_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) override;
-        folly::Future<bool> future_send_message(std::unique_ptr<::std::string> p_client_id, std::unique_ptr<::std::string> p_message) override;
+        void find_last_message(::std::string& result, std::unique_ptr<::std::string> client_id) override;
+        //folly::Future<std::unique_ptr<::std::string>> future_find_last_message(std::unique_ptr<::std::string> p_client_id) override;
+        bool send_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) override;
+        //folly::Future<bool> future_send_message(std::unique_ptr<::std::string> p_client_id, std::unique_ptr<::std::string> p_message) override;
 
-        private:
-        std::shared_ptr<std::unordered_map<std::thread::id, std::shared_ptr<MockDatabaseAsyncClient>>> dbMap =
-                std::make_shared<std::unordered_map<std::thread::id, std::shared_ptr<MockDatabaseAsyncClient>>>();
-        mutable std::shared_mutex dbMapMutex_;
-        shared_ptr<MockDatabaseAsyncClient>  gimmeDbConnection();
+    private:
+        std::unique_ptr<std::thread> netlinkManagerThread_{nullptr};
+
+        folly::EventBase eb;
+        std::unique_ptr<MockDatabaseAsyncClient> dbClient;
         const folly::SocketAddress addr1 = M_GET_SOCKET_ADDRESS("mock-database", 10001);
         const folly::SocketAddress addr2 =  M_GET_SOCKET_ADDRESS("sanitization-service", 10003);
     };

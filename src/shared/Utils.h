@@ -108,15 +108,6 @@ std::unique_ptr<T> newRocketClient(folly::EventBase *evb, folly::SocketAddress c
     return std::make_unique<T>(std::move(channel));
 }
 
-template <class T>
-std::shared_ptr<T> newRocketClient2(folly::EventBase *evb, folly::SocketAddress const &addr, uint32_t timeout = 60000) {
-    auto *channel2 = new RocketClientChannel(evb, folly::AsyncSocket::newSocket(evb, addr), apache::thrift::RequestSetupMetadata());
-    channel2->setTimeout(timeout);
-    channel2->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);
-
-    return std::make_shared<T>(std::make_shared<RocketClientChannel>(channel2));
-}
-
 template <typename T>
 std::unique_ptr<ThriftServer> newServer(folly::SocketAddress const &addr, shared_ptr<T> handler) {
     auto proc_factory = std::make_shared<ThriftServerAsyncProcessorFactory<T>>(handler);

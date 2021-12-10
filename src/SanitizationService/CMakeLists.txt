@@ -6,6 +6,7 @@ add_executable(
     # ${THRIFT_GEN_CPP_DIR}/SanitizationService.cpp
     # ${THRIFT_GEN_CPP_DIR}/MessageService.cpp
     ../shared/Utils.cpp
+    ../shared/ServerStats.cpp
 )
 
 target_link_libraries(

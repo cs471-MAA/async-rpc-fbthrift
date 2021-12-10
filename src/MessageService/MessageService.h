@@ -3,8 +3,9 @@
 #include <dep/if/gen-cpp2/MessageService.h>
 #include "folly/io/async/ScopedEventBaseThread.h"
 #include <fb303/ServiceData.h>
-#include <Utils.h>
 #include "common/fb303/cpp/FacebookBase2.h"
+#include <Utils.h>
+#include "ServerStats.h"
 // #include <fb303/BaseService.h>
 
 namespace fb303 = facebook::fb303;
@@ -18,10 +19,10 @@ namespace mock_message_board {
                                 //   public facebook::fb303::BaseService {
                                   public FacebookBase2 {
     public:
+        ServerStatsManager manager;
         explicit MessageServiceHandler()
-        : FacebookBase2("MessageService") {
+        : FacebookBase2("MessageService"), manager("message_service_stats.csv"){
         // : BaseService("MessageService") {
-
             addr1 = M_GET_SOCKET_ADDRESS("mock-database", 10001);
             addr2 = M_GET_SOCKET_ADDRESS("sanitization-service", 10003);
 
@@ -55,8 +56,8 @@ namespace mock_message_board {
         // typedef facebook::fb303::cpp2::BaseServiceAsyncProcessor ProcessorType;
 
         // RPCs
-        void find_last_message(::std::string& result, std::unique_ptr<::std::string> client_id) override;
-        bool send_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message) override;
+        void find_last_message(::std::string& result, std::unique_ptr<::std::string> client_id, int64_t query_uid) override;
+        bool send_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message, int64_t query_uid) override;
     private:
         folly::SocketAddress addr1;
         folly::SocketAddress addr2;

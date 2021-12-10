@@ -42,6 +42,9 @@ if(LOCALHOST)
   add_definitions(-DLOCALHOST)
   message(STATUS
         "The code will be compiled for localhost.")
+else()
+  message(STATUS
+        "The code will be compiled for docker.")
 endif()
 
 option(OPTI3 "Will create a optimized code level 3." OFF)

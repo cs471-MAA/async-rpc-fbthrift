@@ -8,6 +8,7 @@
 #include <fb303/ServiceData.h>
 #include "MockDatabaseHandler.h"
 #include "Utils.h"
+#include "ServerStats.h"
 
 namespace fb303 = facebook::fb303;
 
@@ -21,6 +22,11 @@ using folly::ThreadedExecutor;
 using mock_message_board::MockDatabaseHandler;
 
 using namespace std;
+ServerStatsManager* manager;
+void int_handler(int s){
+    delete manager;
+    exit(1); 
+}
 
 int main(int argc, char *argv[]) {
     // ======================= INIT ======================= //
@@ -34,14 +40,19 @@ int main(int argc, char *argv[]) {
     // ======================= SERVER SETUP ======================= //
     
     folly::SocketAddress addr = M_GET_SOCKET_ADDRESS("mock-database", 10001);
+    auto service_handler = std::make_shared<MockDatabaseHandler>();
+    manager = &(service_handler->manager);
+    auto server = newServer(addr, service_handler);
     
-    auto server = newServer(addr, std::make_shared<MockDatabaseHandler>());
     if (iothreads > 0)
         server->setNumIOWorkerThreads(iothreads);
     if (cputhreads > 0)
         server->setNumCPUWorkerThreads(cputhreads);
     
     // ======================= SERVER STARTS ======================= //
+
+    sigint_catcher(int_handler);
+
     M_DEBUG_OUT(MOCK_DATABASE_PREFIX << " starts");
     server->serve();
 }

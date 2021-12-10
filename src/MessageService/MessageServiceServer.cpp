@@ -8,8 +8,15 @@
 
 #include "MessageService.h"
 #include "Utils.h"
+#include "ServerStats.h"
 
 namespace fb303 = facebook::fb303;
+
+ServerStatsManager* manager;
+void int_handler(int s){
+    delete manager;
+    exit(1); 
+}
 
 using mock_message_board::MessageServiceHandler;
 
@@ -26,8 +33,9 @@ int main(int argc, char** argv) {
     // ======================= SERVER SETUP ======================= //
 
     folly::SocketAddress addr = M_GET_SOCKET_ADDRESS("message-service", 10002);
-    
-    auto server = newServer(addr, std::make_shared<MessageServiceHandler>());
+    auto service_handler = std::make_shared<MessageServiceHandler>();
+    manager = &(service_handler->manager);
+    auto server = newServer(addr, service_handler);
 
     if (iothreads > 0)
         server->setNumIOWorkerThreads(iothreads);
@@ -43,6 +51,8 @@ int main(int argc, char** argv) {
     }
 
     // ======================= SERVER STARTS ======================= //
+    sigint_catcher(int_handler);
+
     M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "start");
     // run server
     server->serve();

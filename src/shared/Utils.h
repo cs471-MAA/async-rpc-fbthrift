@@ -3,7 +3,6 @@
 //
 #pragma once
 
-
 #include <glog/logging.h>
 #include <folly/io/async/AsyncSocket.h>
 #include <folly/Unit.h>
@@ -14,6 +13,15 @@
 #include <dep/if/gen-cpp2/MessageService.h>
 #include <iostream>
 #include <chrono>
+#include <string>
+#include <thread>
+#include <unistd.h>
+#include <cstdio>
+#include <memory>
+#include <stdexcept>
+#include <array>
+#include <signal.h>
+#include <stdlib.h>
 
 using folly::AsyncSocket;
 using apache::thrift::ThriftServer;
@@ -56,7 +64,21 @@ using namespace std;
     #define M_GET_SOCKET_ADDRESS(ADDRESS, PORT) folly::SocketAddress(ADDRESS, PORT, true)
 #endif
 
+
+
+// https://stackoverflow.com/questions/478898/how-do-i-execute-a-command-and-get-the-output-of-the-command-within-c-using-po
+string exec(const char* cmd);
+
+uint64_t generate_local_uid();
+
+uint64_t get_query_uid(uint64_t local_uid, uint64_t query_number);
+
+uint64_t get_epoch_time_us();
+
 folly::AsyncTransport::UniquePtr getSocket(folly::EventBase *evb, folly::SocketAddress const &addr);
+
+void sigint_catcher(void (*handler)(int));
+
 
 template <class T>
 std::unique_ptr<T> newRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr, uint32_t timeout = 60000) {
@@ -76,3 +98,4 @@ std::unique_ptr<ThriftServer> newServer(folly::SocketAddress const &addr, shared
     
     return server;
 }
+

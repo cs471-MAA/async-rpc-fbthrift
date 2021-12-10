@@ -3,6 +3,8 @@ add_executable(
 	client
 
 	client.cpp
+	../shared/Utils.cpp
+	../shared/ServerStats.cpp
 )
 target_link_libraries(
 	client

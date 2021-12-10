@@ -4,7 +4,6 @@ add_executable(
 		MessageServiceServer.cpp
 		MessageService.cpp
 		../shared/Utils.cpp
-		../shared/ServerStats.cpp
 )
 target_link_libraries(
 		MessageServiceServer

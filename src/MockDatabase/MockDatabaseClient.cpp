@@ -16,7 +16,6 @@
 
 #include <dep/if/gen-cpp2/MessageService.h>
 #include "Utils.h"
-#include "ServerStats.h"
 
 namespace fb303 = facebook::fb303;
 
@@ -30,11 +29,10 @@ using folly::ThreadedExecutor;
 using mock_message_board::MessageServiceAsyncClient;
 using namespace std;
 
-const string MOCK_CLIENT_PREFIX = "mock-client     | ";
-
 int find_success_counter = 0;
 int send_success_counter = 0;
-ServerStatsManager client_stat_manager("mock_client_stats.csv");
+
+const string MOCK_CLIENT_PREFIX = "mock-client     | ";
 
 void onFindReply(string message) {
     M_DEBUG_OUT("\tResponse received: " << message);
@@ -73,28 +71,26 @@ int main(int argc, char *argv[]) {
 
     // creating client
     auto client = newRocketClient<MockDatabaseAsyncClient>(&eb, addr, 90000);
-    uint64_t client_uid = generate_local_uid();
+    auto start = std::chrono::system_clock::now();
+
     // ======================= SENDING CALLS ======================= //
     std::vector<folly::Future<folly::Unit>> futs;
-    auto start = std::chrono::system_clock::now();
     for (int32_t i = 0; i < iterations; i++) {
-        uint64_t query_uid = get_query_uid(client_uid, i);
         M_DEBUG_OUT(MOCK_CLIENT_PREFIX << "sending call " << i);
-        client_stat_manager.add_entry(query_uid, get_epoch_time_us());
 
         #ifdef SYNC
             if (i % 2 == 1){
                 string result;
-                client->sync_find_last_message(result, client_id, query_uid);
+                client->sync_find_last_message(result, client_id);
             } else {
-                client->sync_store_message(result, client_id, query_uid);
+                client->sync_store_message(result, client_id);
             }
         #else
             if (i % 2 == 1){
-                auto f = client->future_find_last_message(client_id, query_uid);
+                auto f = client->future_find_last_message(client_id);
                 futs.push_back(move(f).thenValue(onFindReply).thenError<std::exception>(onError));
             } else {
-                auto f = client->future_store_message(client_id, message, query_uid);
+                auto f = client->future_store_message(client_id, message);
                 futs.push_back(move(f).thenValue(onStoreReply).thenError<std::exception>(onError));
             }
         #endif

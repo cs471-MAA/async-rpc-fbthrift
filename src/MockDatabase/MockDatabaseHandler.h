@@ -9,7 +9,6 @@
 #include <ctime>
 #include <fb303/ServiceData.h>
 #include "Utils.h"
-#include "ServerStats.h"
 
 namespace fb303 = facebook::fb303;
 
@@ -22,17 +21,12 @@ namespace mock_message_board {
     private:
         unordered_map<string, string> last_messages;
         chrono::time_point<chrono::system_clock> start;
-        std::chrono::microseconds waiting_time;
+        std::chrono::milliseconds waiting_time;
     public:
-        ServerStatsManager manager;
         
-        MockDatabaseHandler(std::chrono::microseconds waiting_time = 10us) : 
-            start(std::chrono::system_clock::now()), 
-            waiting_time(waiting_time), 
-            manager("mock_database_stats.csv") {}
+        explicit MockDatabaseHandler(std::chrono::milliseconds waiting_time = 5ms) : start(std::chrono::system_clock::now()), waiting_time(waiting_time) {}
 
-        void find_last_message(string& result, unique_ptr<string> client_id, int64_t query_uid) override{
-            manager.add_entry(query_uid, get_epoch_time_us());
+        void find_last_message(string& result, unique_ptr<string> client_id) override{
             auto end = std::chrono::system_clock::now();
             std::chrono::duration<double> elapsed_seconds = end - start;
             M_DEBUG_OUT(MOCK_DATABASE_PREFIX << "find_last_message: from " << *client_id << " at " << elapsed_seconds.count() << "s.");
@@ -59,20 +53,15 @@ namespace mock_message_board {
             end = std::chrono::system_clock::now();
             elapsed_seconds = end - start;
             M_DEBUG_OUT("\tMessage found from " << *client_id << " at " << elapsed_seconds.count() << "s.");
-            
-            manager.add_entry(query_uid, get_epoch_time_us());
         }
         
-        bool store_message(unique_ptr<string> client_id, unique_ptr<string> message, int64_t query_uid) override {
-            manager.add_entry(query_uid, get_epoch_time_us());
+        bool store_message(unique_ptr<string> client_id, unique_ptr<string> message) override {
             M_DEBUG_OUT(MOCK_DATABASE_PREFIX << "store_message:" << *message << " from " << *client_id);
             this_thread::sleep_for(waiting_time);
 
             last_messages[*client_id] = *message;
             
             M_DEBUG_OUT("\tMessage stored: " << *message  << " from " << *client_id);
-            
-            manager.add_entry(query_uid, get_epoch_time_us());
             return true;
         }
         

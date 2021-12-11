@@ -1,5 +1,7 @@
 IMAGE_NAME=saheru/fbthrift-benchmark
 
+.PHONY: build-docker build-and-copy-docker copy-docker-build
+
 build-docker:
 	docker build -m 6G -t ${IMAGE_NAME} .
 

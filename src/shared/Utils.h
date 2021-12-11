@@ -84,7 +84,8 @@ void sigint_catcher(void (*handler)(int));
 template <class T>
 std::unique_ptr<T> newRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr, uint32_t timeout = 60000) {
     auto channel = HeaderClientChannel::newChannel(folly::AsyncSocket::newSocket(evb, addr));
-    channel->setTimeout(timeout);
+    // channel->setTimeout(timeout);
+    channel->setTimeout(0);
     return std::make_unique<T>(std::move(channel));
 }
 
@@ -94,7 +95,8 @@ std::unique_ptr<ThriftServer> newServer(folly::SocketAddress const &addr, shared
     auto server = std::make_unique<ThriftServer>();
     server->setAddress(addr);
     server->setProcessorFactory(proc_factory);
-    server->setSocketWriteTimeout(8000ms);
+    // server->setSocketWriteTimeout(8000ms);
+    server->setSocketWriteTimeout(0ms);
     
     return server;
 }

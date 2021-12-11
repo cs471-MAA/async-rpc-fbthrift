@@ -58,19 +58,20 @@ namespace mock_message_board {
 
             end = std::chrono::system_clock::now();
             elapsed_seconds = end - start;
-            M_DEBUG_OUT("\tMessage found from " << *client_id << " at " << elapsed_seconds.count() << "s.");
+            M_DEBUG_OUT(MOCK_DATABASE_PREFIX << "Message found from " << *client_id << " query: " << (uint64_t)query_uid << " at " << elapsed_seconds.count() << "s.");
             
             manager.add_entry(query_uid, get_epoch_time_us());
         }
         
         bool store_message(unique_ptr<string> client_id, unique_ptr<string> message, int64_t query_uid) override {
             manager.add_entry(query_uid, get_epoch_time_us());
-            M_DEBUG_OUT(MOCK_DATABASE_PREFIX << "store_message:" << *message << " from " << *client_id);
+            M_DEBUG_OUT(MOCK_DATABASE_PREFIX << "store_message: " << *message << " query: " << (uint64_t)query_uid << " from " << *client_id);
+
             this_thread::sleep_for(waiting_time);
 
             last_messages[*client_id] = *message;
             
-            M_DEBUG_OUT("\tMessage stored: " << *message  << " from " << *client_id);
+            M_DEBUG_OUT(MOCK_DATABASE_PREFIX << "Message stored: " << *message << " query: " << (uint64_t)query_uid << " from " << *client_id);
             
             manager.add_entry(query_uid, get_epoch_time_us());
             return true;

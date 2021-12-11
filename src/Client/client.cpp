@@ -7,7 +7,6 @@
 #include <folly/Unit.h>
 #include <folly/executors/ThreadedExecutor.h>
 #include <vector>
-#include <thrift/lib/cpp2/async/RocketClientChannel.h>
 #include <string>
 #include <chrono>
 #include <ctime>
@@ -19,15 +18,10 @@
 #include "Utils.h"
 #include "ServerStats.h"
 
-namespace fb303 = facebook::fb303;
-using apache::thrift::ThriftServer;
-using apache::thrift::ThriftServerAsyncProcessorFactory;
-using apache::thrift::RequestCallback;
-using apache::thrift::ClientReceiveState;
-using apache::thrift::RocketClientChannel;
-using folly::AsyncSocket;
 using folly::ThreadedExecutor;
 using mock_message_board::MessageServiceAsyncClient;
+using mock_message_board::MessageResponse;
+using mock_message_board::StatusResponse;
 using namespace std;
 
 const string CLIENT_PREFIX = "client          | ";
@@ -36,22 +30,22 @@ int find_success_counter = 0;
 int send_success_counter = 0;
 ServerStatsManager client_stat_manager(STATS_FILES_DIR"client_stats.csv");
 
-void onFindReply(string message) {
-    M_DEBUG_OUT("\tResponse received: " << message);
+void onFindReply(MessageResponse resp) {
+    M_DEBUG_OUT(CLIENT_PREFIX << "query: " << (uint64_t)*resp.query_uid_ref() << "response received: " << *resp.message_ref());
     find_success_counter += 1;
-    // uint64_t epoch_time_ms = chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count();
-    // client_stat_manager.add_entry(query_uid, epoch_time_ms);
+    uint64_t epoch_time_ms = chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    client_stat_manager.add_entry((uint64_t)*resp.query_uid_ref(), epoch_time_ms);
 }
 
-void onSendReply(bool resp) {
-    M_DEBUG_OUT("\tSend status: " << ((resp) ? "True" : "False"));
+void onSendReply(StatusResponse resp) {
+    M_DEBUG_OUT(CLIENT_PREFIX << "Send message status: " << ((*resp.ok_ref()) ? "True" : "False"));
     send_success_counter += 1;
-    // uint64_t epoch_time_ms = chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count();
-    // client_stat_manager.add_entry(query_uid, epoch_time_ms);
+    uint64_t epoch_time_ms = chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    client_stat_manager.add_entry((uint64_t)*resp.query_uid_ref(), epoch_time_ms);
 }
 
 void onError(std::exception const &e) {
-    M_DEBUG_ERR("\tError: " << e.what());
+    M_DEBUG_ERR(CLIENT_PREFIX << "Error: " << e.what());
 }
 
 void client_summary(std::chrono::duration<double> elapsed_seconds, int iterations);
@@ -132,7 +126,6 @@ int main(int argc, char *argv[]) {
 }
 
 void client_summary(std::chrono::duration<double> elapsed_seconds, int iterations){
-    
     int find_iterations = iterations/2;
     int send_iterations = iterations - find_iterations;
 
@@ -141,11 +134,4 @@ void client_summary(std::chrono::duration<double> elapsed_seconds, int iteration
         send_success_counter << "/" << send_iterations << " successful send message calls.");
     M_DEBUG_OUT(CLIENT_PREFIX << "Received " << 
         find_success_counter << "/" << find_iterations  << " successful find message calls.");
-    
-    fb303::fbData->addStatValue("nb_requests", 1, fb303::SUM);
-    auto counters = fb303::fbData->getCounters();
-    M_DEBUG_OUT("# of counters=" << static_cast<long unsigned>(counters.size()));
-    for (auto item : counters) {
-        M_DEBUG_OUT("counter=" << item.first << " | value=" << item.second);
-    }
 }

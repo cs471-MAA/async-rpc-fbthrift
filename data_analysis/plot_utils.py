@@ -57,17 +57,37 @@ all = all[["client_uid", "query_index",
 
 all = all.groupby("client_uid")
 
+def plot_trace(X1, X2, Y, color, label, w):
+    U = X2 - X1
+    V = Y - Y
+    plt.quiver(X1, Y, U, V,
+               color=color, label=label, scale_units="xy",
+               units="height", width=w, headwidth=0, scale=1)
+
 for client_uid, queries in all:
     df = queries.drop("client_uid", axis=1)
+
+    if df.end_client.isnull().values.any():
+        continue
     # print(df)
     # plt.figure()
-    plt.plot(df.start_client, df.query_index, ".", color="#145ac9",label="Client Start")
-    plt.plot(df.start_msg, df.query_index, ".", color="#139415",label="Message Service Start")
-    plt.plot(df.start_sanit, df.query_index, ".", color="#bdb21c",label="Service Service Start")
-    plt.plot(df.start_mock, df.query_index, ".", color="#a12810",label="Mock database Start")
-    plt.plot(df.end_mock, df.query_index, ".", color="#ff5b3b",label="Mock database End")
-    plt.plot(df.end_sanit, df.query_index, ".", color="#ffc919",label="Service Service End")
-    plt.plot(df.end_msg, df.query_index, ".", color="#22f23a",label="Message Service End")
-    plt.plot(df.end_client, df.query_index, ".", color="#2dbaed",label="Client End")
+    # plt.plot(df.start_client, df.query_index, ".", color="#145ac9",label="Client Start")
+    # plt.plot(df.end_client, df.query_index, ".", color="#2dbaed",label="Client End")
+
+    w = 1/df.start_client.size #df.end_client.max() / 100
+    print(f'{w=}')
+    print(f'{df.end_client.max()=}')
+
+    plot_trace(df.start_client, df.end_client, df.query_index, color="#145ac9", label="Client", w=w*0.99)
+
+    plot_trace(df.start_msg, df.end_msg, df.query_index, color="#139415", label="Message Service", w=w*0.75)
+
+    plot_trace(df.start_sanit, df.end_sanit, df.query_index, color="#bdb21c", label="Sanitize Service", w=w*0.5)
+
+    plot_trace(df.start_mock, df.end_mock, df.query_index, color="#a12810", label="Mock database", w=w*0.25)
+
+    plt.ylabel("query ID")
+    plt.xlabel("time [ms]")
+    plt.xlim(-df.end_client.max()*0.01, df.end_client.max()*1.01)
     plt.legend()
     plt.show()

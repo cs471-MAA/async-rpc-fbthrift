@@ -26,7 +26,7 @@ namespace mock_message_board {
     public:
         ServerStatsManager manager;
         
-        MockDatabaseHandler(std::chrono::microseconds waiting_time = 10us) : 
+        MockDatabaseHandler(std::chrono::microseconds waiting_time = 5ms) : 
             start(std::chrono::system_clock::now()), 
             waiting_time(waiting_time), 
             manager(STATS_FILES_DIR"mock_database_stats.csv") {}

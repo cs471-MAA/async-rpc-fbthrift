@@ -7,7 +7,7 @@ services:
         ports:
             - 10001:10001
         entrypoint: 
-            ["/app/src/build/MockDatabase/MockDatabase", "1", "4"]
+            ["/app/src/build/MockDatabase/MockDatabase", "1", "1"]
         volumes:
           - ./container_files:/app/src/build/stats_files:rw
         stop_signal: SIGINT
@@ -18,7 +18,7 @@ services:
         ports:
             - 10003:10003
         entrypoint: 
-            ["/app/src/build/SanitizationService/SanitizationServiceServer", "1", "4"]
+            ["/app/src/build/SanitizationService/SanitizationServiceServer", "1", "1"]
         depends_on:
             - mock-database
         volumes:
@@ -31,7 +31,7 @@ services:
         ports:
             - 10002:10002
         entrypoint: 
-            ["/app/src/build/MessageService/MessageServiceServer", "1", "4"]
+            ["/app/src/build/MessageService/MessageServiceServer", "1", "1"]
         depends_on:
             - mock-database
             - sanitization-service
@@ -44,7 +44,7 @@ services:
         hostname: client
         # restart: always
         entrypoint: 
-            ["/app/src/build/Client/client", "50"]
+            ["/app/src/build/Client/client", "1"]
         depends_on:
             - message-service
         volumes:

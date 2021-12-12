@@ -61,8 +61,10 @@ def plot_trace(X1, X2, Y, color, label, w):
     U = X2 - X1
     V = Y - Y
     plt.quiver(X1, Y, U, V,
-               color=color, label=label, scale_units="xy",
-               units="height", width=w, headwidth=0, scale=1)
+               color=color, label=label, scale_units="xy", scale=1,
+               units="height", width=w,
+               # remove arrow head
+               headaxislength=0, headlength=0, headwidth=1)
 
 for client_uid, queries in all:
     df = queries.drop("client_uid", axis=1)
@@ -85,6 +87,11 @@ for client_uid, queries in all:
     plot_trace(df.start_sanit, df.end_sanit, df.query_index, color="#bdb21c", label="Sanitize Service", w=w*0.5)
 
     plot_trace(df.start_mock, df.end_mock, df.query_index, color="#a12810", label="Mock database", w=w*0.25)
+
+    print(f'{df.start_client[0]=} | {df.end_client[0]=} || ')
+    print(f'{df.start_msg[0]=} | {df.end_msg[0]=} ||')
+    print(f'{df.start_sanit[0]=} | {df.end_sanit[0]=} ||')
+    print(f'{df.start_mock[0]=} | {df.end_mock[0]=}')
 
     plt.ylabel("query ID")
     plt.xlabel("time [ms]")

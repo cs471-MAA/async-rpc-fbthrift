@@ -30,19 +30,6 @@ target_link_libraries(
 	fb303
 )
 
-# add_executable(
-# 	MockDatabaseMiddle
-
-# 	MockDatabaseMiddle.cpp
-# )
-# target_link_libraries(
-# 	MockDatabaseMiddle
-
-# 	mock_message_board-cpp2
-# 	atomic
-# 	FBThrift::thriftcpp2
-# )
-
 add_executable(
 	MockDatabaseClient
 

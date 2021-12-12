@@ -54,7 +54,7 @@ void mock_message_board::MessageServiceHandler::send_message(StatusResponse& res
     bool res = false;
     if(search == sanMap.end()){
         auto *eb = new folly::EventBase();
-        M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "New client for thread ID " << std::this_thread::get_id() << ": sending query: " << query_uid);
+        M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "New client for thread ID " << std::this_thread::get_id() << ": sending query: " << (uint64_t)query_uid);
 
         res = sanMap.insert({std::this_thread::get_id(), newRocketClient<SanitizationServiceAsyncClient>(eb, addr2, MSGSERV_SANIT_TIMEOUT)})
         .first->second->sync_sanitize_message(*client_id, *message, query_uid);

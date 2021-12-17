@@ -1,59 +1,38 @@
-#include <glog/logging.h>
-#include <folly/init/Init.h>
-
-#include <thrift/lib/cpp2/server/ThriftServer.h>
-#include <folly/executors/ThreadedExecutor.h>
-#include <folly/synchronization/Baton.h>
-#include <thrift/lib/cpp2/async/RocketClientChannel.h>
-#include <fb303/ServiceData.h>
-#include "MockDatabaseHandler.h"
-#include "Utils.h"
-#include "ServerStats.h"
-
-namespace fb303 = facebook::fb303;
-
-using apache::thrift::ThriftServer;
-using apache::thrift::ThriftServerAsyncProcessorFactory;
-using apache::thrift::RequestCallback;
-using apache::thrift::ClientReceiveState;
-using apache::thrift::RocketClientChannel;
-using folly::AsyncSocket;
-using folly::ThreadedExecutor;
-using mock_message_board::MockDatabaseHandler;
+#include "MockDatabase.h"
 
 using namespace std;
-ServerStatsManager* manager;
-void int_handler(int s){
-    delete manager;
-    exit(1); 
+using namespace mock_message_board;
+
+
+void MockDatabaseHandler::find_last_message(string& result, unique_ptr<string> client_id, int64_t query_uid){
+    manager.add_entry(query_uid, get_epoch_time_us());
+    M_DEBUG_OUT(MOCK_DATABASE_PREFIX << "find_last_message: from " << *client_id << " query: " << (uint64_t)query_uid);
+    //=========================================================================
+
+    this_thread::sleep_for(waiting_time);
+
+    if (last_messages.find(*client_id) == last_messages.end()){
+        result = "WARNING: This user " + *client_id + " didn't post any message or doesn't exist...";
+    } else {
+        result = last_messages[*client_id];
+    }
+
+    //=========================================================================
+    M_DEBUG_OUT(MOCK_DATABASE_PREFIX << "Message found " << result << " from " << *client_id << "s." << " query: " << (uint64_t)query_uid);
+    manager.add_entry(query_uid, get_epoch_time_us());
 }
 
-int main(int argc, char *argv[]) {
-    // ======================= INIT ======================= //
-    // FLAGS_logtostderr = 1;
-    folly::init(&argc, &argv);
+bool MockDatabaseHandler::store_message(unique_ptr<string> client_id, unique_ptr<string> message, int64_t query_uid){
+    manager.add_entry(query_uid, get_epoch_time_us());
+    M_DEBUG_OUT(MOCK_DATABASE_PREFIX << "store_message: " << *message  << " from " << *client_id << " query: " << (uint64_t)query_uid);
+    //=========================================================================
 
-    int i = 0;
-    int iothreads = (argc > ++i) ? stoi(argv[i]) : 0;
-    int cputhreads = (argc > ++i) ? stoi(argv[i]) : 0;
-    std::chrono::microseconds waiting_time = ((argc > ++i) ? stoi(argv[i]) : 5000) * 1us;
+    this_thread::sleep_for(waiting_time);
 
-    // ======================= SERVER SETUP ======================= //
+    last_messages[*client_id] = *message;
     
-    folly::SocketAddress addr = M_GET_SOCKET_ADDRESS("mock-database", 10001);
-    auto service_handler = std::make_shared<MockDatabaseHandler>(waiting_time);
-    manager = &(service_handler->manager);
-    auto server = newServer(addr, service_handler);
-    
-    if (iothreads > 0)
-        server->setNumIOWorkerThreads(iothreads);
-    if (cputhreads > 0)
-        server->setNumCPUWorkerThreads(cputhreads);
-    
-    // ======================= SERVER STARTS ======================= //
-
-    sigint_catcher(int_handler);
-
-    M_DEBUG_OUT(MOCK_DATABASE_PREFIX << " starts");
-    server->serve();
+    //=========================================================================
+    M_DEBUG_OUT(MOCK_DATABASE_PREFIX << "Message stored: " << *message << " from " << *client_id << " query: " << (uint64_t)query_uid );
+    manager.add_entry(query_uid, get_epoch_time_us());
+    return true;
 }

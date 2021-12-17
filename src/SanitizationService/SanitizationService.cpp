@@ -1,40 +1,51 @@
-//
 // Created by adrien on 11.11.21.
-//
 
-#include <Utils.h>
 #include <regex>
-#include <dep/if/gen-cpp2/MessageService.h>
 #include "SanitizationService.h"
 
-using mock_message_board::MessageServiceAsyncClient;
+using namespace std;
+using namespace mock_message_board;
 
-bool mock_message_board::SanitizationHandler::sanitize_message(std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message, int64_t query_uid) {
+bool SanitizationHandler::sanitize_message(unique_ptr<string> client_id, unique_ptr<string> message, int64_t query_uid) {
     manager.add_entry(query_uid, get_epoch_time_us());
     M_DEBUG_OUT(SANIT_PREFIX << "sanitize_message: received client_id=" << *client_id << " query: " << (uint64_t)query_uid << " | message=" << *message);
+    //==========================================================================
 
-    std::regex match_expr("^.*[\\/*$^].*$");
-    if (std::regex_match(*message, match_expr)) {
+    // TASK 1 (Local)
+    regex match_expr("^.*[\\/*$^].*$");
+    if (regex_match(*message, match_expr)) {
         return false;
     }
 
-    // auto search = dbMap.find(std::this_thread::get_id());
     bool res = false;
-    // if(search == dbMap.end()){
-    //     auto *eb = new folly::EventBase();
-    //     M_DEBUG_OUT(SANIT_PREFIX << "New client for thread ID " << std::this_thread::get_id() << ": sending query: " << (uint64_t)query_uid);
-    //     res = dbMap.insert({std::this_thread::get_id(), newRocketClient<MockDatabaseAsyncClient>(eb, addr, SANIT_MOCK_TIMEOUT)})
-    //             .first->second->sync_store_message(*client_id, *message, query_uid); 
-    // }else{
-    //     M_DEBUG_OUT(SANIT_PREFIX << "Thread ID " << std::this_thread::get_id() << ": sending query: " << (uint64_t)query_uid);
-    //     res = search->second->sync_store_message(*client_id, *message, query_uid);
-    // }
+    #ifdef SYNC
+        // TASK 2 (Remote)
+        thread::id tid = this_thread::get_id();
+        auto search = mock_map.find(tid);
+        if(search == mock_map.end()){
+            auto *eb = new folly::EventBase();
+            res = mock_map.insert({tid, newRocketClient<MockDatabaseAsyncClient>(eb, addr_mock, SANIT_MOCK_TIMEOUT)})
+                        .first->second->sync_store_message(*client_id, *message, query_uid);
+        }else{
+            res = search->second->sync_store_message(*client_id, *message, query_uid);
+        }
 
-    auto f = mock->future_store_message(*client_id, *message, query_uid);
-    f.wait();
-    res = f.value();
+        // TASK 3 (Fake)
+        this_thread::sleep_for(waiting_time);
+    #else
+        // TASK 2 (Remote) Starting 
+        auto f = mock->future_store_message(*client_id, *message, query_uid);
 
-    M_DEBUG_OUT(SANIT_PREFIX << "Thread ID " << std::this_thread::get_id() << ": received query: " << (uint64_t)query_uid);
+        // TASK 3 (Fake)
+        this_thread::sleep_for(waiting_time);
+
+        // TASK 2 (Remote) Finishing
+        f.wait();
+        res = f.value();
+    #endif
+
+    //==========================================================================
+    M_DEBUG_OUT(SANIT_PREFIX << "Thread ID " << this_thread::get_id() << ": received query: " << (uint64_t)query_uid);
     manager.add_entry(query_uid, get_epoch_time_us());
     return res;
 }

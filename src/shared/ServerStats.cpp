@@ -139,9 +139,12 @@ void dump_matrix(const string& filename,
             active_buffer = (active_buffer + 1) % buffer_count;    
         }
 
-        data_buffers[active_buffer][entry_cursor][0] = query_id;
-        data_buffers[active_buffer][entry_cursor][1] = epoch_time_ms;
-        entry_cursor += 1;
+        unique_lock<mutex> entry_saving_lock(entry_saving_mutex, defer_lock);
+        entry_saving_lock.lock();
+            data_buffers[active_buffer][entry_cursor][0] = query_id;
+            data_buffers[active_buffer][entry_cursor][1] = epoch_time_ms;
+            entry_cursor += 1;
+        entry_saving_lock.unlock();
     }
 
     uint32_t ServerStatsManager::get_entry_count(){

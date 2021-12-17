@@ -1,8 +1,6 @@
-//
 // Created by adrien on 06.11.21.
-//
+
 #include <glog/logging.h>
-#include <thrift/lib/cpp2/server/ThriftServer.h>
 #include <folly/futures/Future.h>
 #include <folly/Unit.h>
 #include <folly/executors/ThreadedExecutor.h>
@@ -29,7 +27,6 @@ const string CLIENT_PREFIX = "client          | ";
 int find_success_counter = 0;
 int send_success_counter = 0;
 ServerStatsManager client_stat_manager(STATS_FILES_DIR"client_stats.csv");
-
 
 void int_handler(int s){
     delete &client_stat_manager;
@@ -73,7 +70,7 @@ int main(int argc, char *argv[]) {
 
     // ======================= CLIENT SETUP ======================= //
 
-    folly::SocketAddress addr = M_GET_SOCKET_ADDRESS("message-service", 10002);
+    folly::SocketAddress addr = M_MESSAGE_SERVICE_SOCKET_ADDRESS;
 
     // create event runloop, to run on this thread
     folly::ThreadedExecutor executor;
@@ -86,10 +83,12 @@ int main(int argc, char *argv[]) {
 
     // ======================= SENDING CALLS ======================= //
     
-    std::thread ebloop_thread([](shared_ptr<folly::EventBase> eb) {
-            eb.get()->loopForever();
-        }, eb);
-    ebloop_thread.detach();
+    #ifndef CLIENT_SYNC
+        std::thread ebloop_thread([](shared_ptr<folly::EventBase> eb) {
+                eb.get()->loopForever();
+            }, eb);
+        ebloop_thread.detach();
+    #endif
 
     sigint_catcher(int_handler);
     std::vector<folly::Future<folly::Unit>> futs;
@@ -99,12 +98,15 @@ int main(int argc, char *argv[]) {
         M_DEBUG_OUT(CLIENT_PREFIX << "sending call " << i);
         client_stat_manager.add_entry(query_uid, get_epoch_time_us());
 
-        #ifdef SYNC
+        #ifdef CLIENT_SYNC
             if (i % 2 == 1){
-                string result;
+                MessageResponse result;
                 client->sync_find_last_message(result, client_id, query_uid);
+                onFindReply(result);
             } else {
-                client->sync_send_message(client_id, message, query_uid);
+                StatusResponse result;
+                client->sync_send_message(result, client_id, message, query_uid);
+                onSendReply(result);
             }
         #else
             if (i % 2 == 1){
@@ -122,17 +124,20 @@ int main(int argc, char *argv[]) {
         M_DEBUG_OUT(CLIENT_PREFIX << "sent call " << i << " at " << elapsed_seconds.count() << "s");
         this_thread::sleep_for(waiting_time*1us);
         waiting_time *= decreasing_factor;
-        M_DEBUG_OUT(waiting_time)
+        M_DEBUG_OUT(CLIENT_PREFIX << "Delay = " <<waiting_time << "us")
     }
-        
-    auto f = std::move(collectAll(futs.begin(), futs.end())).via(&executor).thenValue([&eb](std::vector<folly::Try<folly::Unit>> &&v) {
-        M_DEBUG_OUT(CLIENT_PREFIX << "received all responses");
-        eb.get()->terminateLoopSoon();
-    });
-
-    f.wait();
     
 
+    #ifdef CLIENT_SYNC
+        M_DEBUG_OUT(CLIENT_PREFIX << "received all responses");
+    #else
+        auto f = std::move(collectAll(futs.begin(), futs.end())).via(&executor).thenValue([&eb](std::vector<folly::Try<folly::Unit>> &&v) {
+            M_DEBUG_OUT(CLIENT_PREFIX << "received all responses");
+            eb.get()->terminateLoopSoon();
+        });
+
+        f.wait();
+    #endif
 
     // ======================= SUMMARY ======================= //
 

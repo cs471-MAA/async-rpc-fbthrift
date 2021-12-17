@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
     string message = (argc > ++i) ? argv[i] : "TEST MESSAGE";
 
     // ======================= CLIENT SETUP ======================= //
-    folly::SocketAddress addr = M_GET_SOCKET_ADDRESS("mock-database", 10001);
+    folly::SocketAddress addr = M_MOCK_DATABASE_SOCKET_ADDRESS;
     
     // create event runloop, to run on this thread
     folly::ThreadedExecutor executor;

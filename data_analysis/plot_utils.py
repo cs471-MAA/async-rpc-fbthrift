@@ -73,6 +73,8 @@ for client_uid, queries in all:
     # if df.end_client.isnull().values.any():
     #     continue
     if client_uid == 0:
+        print("Weird behavior here:")
+        print(df)
         continue
     
     # print(df)
@@ -92,7 +94,6 @@ for client_uid, queries in all:
 
     plot_trace(df.start_mock, df.end_mock, df.query_index, color="#a12810", label="Mock database", w=w*0.25)
 
-    print(df)
     print(f'{df.start_client[0]=} | {df.end_client[0]=} || ')
     print(f'{df.start_msg[0]=} | {df.end_msg[0]=} ||')
     print(f'{df.start_sanit[0]=} | {df.end_sanit[0]=} ||')

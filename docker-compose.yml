@@ -7,7 +7,7 @@ services:
         ports:
             - 20001:10001
         entrypoint: 
-            ["/app/src/build/MockDatabase/MockDatabase", "1", "1", "100000"] #Last argument is delay of mock database, in microseconds
+            ["/app/src/build/MockDatabase/MockDatabaseServer", "1", "32", "100000"] #Last argument is delay of mock database, in microseconds
         volumes:
           - ./container_files:/app/src/build/stats_files:rw
         stop_signal: SIGINT
@@ -18,7 +18,7 @@ services:
         ports:
             - 20003:10003
         entrypoint: 
-            ["/app/src/build/SanitizationService/SanitizationServiceServer", "1", "1"]
+            ["/app/src/build/SanitizationService/SanitizationServiceServer", "1", "32"]
         depends_on:
             - mock-database
         volumes:
@@ -31,7 +31,7 @@ services:
         ports:
             - 20002:10002
         entrypoint: 
-            ["/app/src/build/MessageService/MessageServiceServer", "1", "1"]
+            ["/app/src/build/MessageService/MessageServiceServer", "1", "32"]
         depends_on:
             - mock-database
             - sanitization-service
@@ -46,7 +46,7 @@ services:
         entrypoint: 
             #Before the last argument is delay between query, in microseconds
             #The last argument is the factor modifiying the waiting time at each iterations
-            ["/app/src/build/Client/client", "20", "TestUser", "Test Message", "2000000", "0.995"] 
+            ["/app/src/build/Client/Client", "100", "TestUser", "Test Message", "100000", "0.995"] 
         depends_on:
             - message-service
         volumes:

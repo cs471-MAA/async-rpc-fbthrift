@@ -15,14 +15,15 @@
 # set(CMAKE_VERBOSE_MAKEFILE ON)
 
 add_executable(
-	MockDatabase
+	MockDatabaseServer
 
+	MockDatabaseServer.cpp
 	MockDatabase.cpp
 	../shared/Utils.cpp
 	../shared/ServerStats.cpp
 )
 target_link_libraries(
-	MockDatabase
+	MockDatabaseServer
 
 	mock_message_board-cpp2
 	atomic
@@ -30,20 +31,20 @@ target_link_libraries(
 	fb303
 )
 
-add_executable(
-	MockDatabaseClient
+# add_executable(
+# 	MockDatabaseClient
 
-	MockDatabaseClient.cpp
-	../shared/Utils.cpp
-	../shared/ServerStats.cpp
-)
-target_link_libraries(
-	MockDatabaseClient
+# 	MockDatabaseClient.cpp
+# 	../shared/Utils.cpp
+# 	../shared/ServerStats.cpp
+# )
+# target_link_libraries(
+# 	MockDatabaseClient
 
-	mock_message_board-cpp2
-	atomic
-	FBThrift::thriftcpp2
-	fb303
-)
+# 	mock_message_board-cpp2
+# 	atomic
+# 	FBThrift::thriftcpp2
+# 	fb303
+# )
 
 # install(TARGETS server DESTINATION /usr/bin/)

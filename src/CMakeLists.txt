@@ -37,6 +37,16 @@ else()
         "The code will be compiled with the ASYNC flags")
 endif()
 
+option(CLIENT_SYNC "Will send request from client synchronously." OFF)
+if(CLIENT_SYNC)
+  add_definitions(-DCLIENT_SYNC)
+  message(STATUS
+        "The code will be compiled with the CLIENTSYNC flags")
+else()
+  message(STATUS
+        "Will send request from client asynchronously.")
+endif()
+
 option(LOCALHOST "Will create a code for localhost execution." OFF)
 if(LOCALHOST)
   add_definitions(-DLOCALHOST)

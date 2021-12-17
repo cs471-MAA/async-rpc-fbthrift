@@ -12,6 +12,12 @@ using namespace std;
 // Other path to try:
 // https://stackoverflow.com/questions/21126950/asynchronously-writing-to-a-file-in-c-unix
 
+
+#define SERVER_STATS_BLOCK(MANAGER, BODY) \
+    MANAGER.add_entry(query_uid, get_epoch_time_us()); \
+    BODY \
+    MANAGER.add_entry(query_uid, get_epoch_time_us());
+
 class ServerStatsManager;
 
 void save_test_file(uint32_t row_count=10, 
@@ -43,6 +49,7 @@ class ServerStatsManager{
         uint32_t entry_cursor;
         uint32_t entry_count;
         uint32_t buffer_count;
+        mutex entry_saving_mutex;
     public:
         ServerStatsManager(const string& filename,
                            bool async_dumping=false,

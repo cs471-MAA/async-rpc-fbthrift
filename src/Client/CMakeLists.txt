@@ -1,13 +1,13 @@
 
 add_executable(
-	client
+	Client
 
-	client.cpp
+	Client.cpp
 	../shared/Utils.cpp
 	../shared/ServerStats.cpp
 )
 target_link_libraries(
-	client
+	Client
 
 	mock_message_board-cpp2
 	atomic

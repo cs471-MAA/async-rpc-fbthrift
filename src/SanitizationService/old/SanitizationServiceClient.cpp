@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 
     // create event runloop, to run on this thread
     folly::EventBase eb;
-    folly::SocketAddress addr = M_GET_SOCKET_ADDRESS("sanitization-service", 10002);
+    folly::SocketAddress addr = M_SANITIZATION_SERVICE_SOCKET_ADDRESS;
 
     // test messages
     const string messages[5] = {

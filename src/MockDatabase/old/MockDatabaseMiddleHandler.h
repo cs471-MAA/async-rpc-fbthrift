@@ -17,11 +17,7 @@ namespace mock_message_board {
         
         MockDatabaseMiddleHandler() {
             folly::EventBase eb;
-            #ifdef LOCALHOST
-                folly::SocketAddress addr("127.0.0.1", 10001, true);
-            #else
-                folly::SocketAddress addr("mock-database", 10001, true);
-            #endif
+            auto addr = M_MOCK_DATABASE_SOCKET_ADDRESS;
 
             // creating client
             middle_client = newMockDatabaseRocketClient(&eb, addr);

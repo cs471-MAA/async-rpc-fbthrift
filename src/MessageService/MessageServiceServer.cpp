@@ -29,11 +29,11 @@ int main(int argc, char** argv) {
     int i = 0;
     int iothreads = (argc > ++i) ? stoi(argv[i]) : 0;
     int cputhreads = (argc > ++i) ? stoi(argv[i]) : 0;
-    
+    chrono::microseconds waiting_time = ((argc > ++i) ? stoi(argv[i]) : 1000) * 1us;
     // ======================= SERVER SETUP ======================= //
 
-    folly::SocketAddress addr = M_GET_SOCKET_ADDRESS("message-service", 10002);
-    auto service_handler = std::make_shared<MessageServiceHandler>();
+    folly::SocketAddress addr = M_MESSAGE_SERVICE_SOCKET_ADDRESS;
+    auto service_handler = std::make_shared<MessageServiceHandler>(waiting_time);
     manager = &(service_handler->manager);
     auto server = newServer(addr, service_handler);
 

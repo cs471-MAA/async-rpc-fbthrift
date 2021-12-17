@@ -9,6 +9,9 @@
 
 using facebook::fb303::FacebookBase2;
 
+#define MSGSERV_MOCK_TIMEOUT 20000
+#define MSGSERV_SANIT_TIMEOUT 30000
+
 const string MESSAGE_SERVICE_PREFIX = "message-service | ";
 
 namespace mock_message_board {
@@ -18,15 +21,22 @@ namespace mock_message_board {
         ServerStatsManager manager;
         explicit MessageServiceHandler()
         : FacebookBase2("MessageService"), manager(STATS_FILES_DIR"message_service_stats.csv"){
-            addr1 = M_GET_SOCKET_ADDRESS("mock-database", 10001);
-            addr2 = M_GET_SOCKET_ADDRESS("sanitization-service", 10003);
-
-            // fb303 counter example
-            // const auto p1 = std::chrono::system_clock::now();
-            // fb303::fbData->setCounter(
-            //     "start.date",
-            //     (int64_t) std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count()
-            // );
+            addr_mock = M_GET_SOCKET_ADDRESS("mock-database", 10001);
+            addr_sanit = M_GET_SOCKET_ADDRESS("sanitization-service", 10003);
+            sanit_eb = make_shared<folly::EventBase>();
+            mock_eb = make_shared<folly::EventBase>();
+            
+            mock = newRocketClient<MockDatabaseAsyncClient>(mock_eb.get(), addr_mock, MSGSERV_MOCK_TIMEOUT);
+            sanit = newRocketClient<SanitizationServiceAsyncClient>(sanit_eb.get(), addr_sanit, MSGSERV_SANIT_TIMEOUT);
+            
+            thread mock_eb_loop_thread([](shared_ptr<folly::EventBase> eb) {
+                eb.get()->loopForever();
+            }, mock_eb);
+            thread sanit_eb_loop_thread([](shared_ptr<folly::EventBase> eb) {
+                eb.get()->loopForever();
+            }, sanit_eb); 
+            mock_eb_loop_thread.detach();
+            sanit_eb_loop_thread.detach();
         }
         ~MessageServiceHandler() {
         }
@@ -34,11 +44,12 @@ namespace mock_message_board {
         void find_last_message(MessageResponse& resp, std::unique_ptr<::std::string> client_id, int64_t query_uid) override;
         void send_message(StatusResponse& resp, std::unique_ptr<::std::string> client_id, std::unique_ptr<::std::string> message, int64_t query_uid) override;
     private:
-        folly::SocketAddress addr1;
-        folly::SocketAddress addr2;
-        std::unordered_map<std::thread::id, std::unique_ptr<SanitizationServiceAsyncClient>> sanMap;
-        std::unordered_map<std::thread::id, std::unique_ptr<MockDatabaseAsyncClient>> dbMap;
-        unordered_map<thread::id, folly::EventBase*> sanEbMap;
-        unordered_map<thread::id, folly::EventBase*> dbEbMap;
+        folly::SocketAddress addr_mock;
+        folly::SocketAddress addr_sanit;
+        shared_ptr<SanitizationServiceAsyncClient> sanit;
+        shared_ptr<MockDatabaseAsyncClient> mock;
+        shared_ptr<folly::EventBase> sanit_eb;
+        shared_ptr<folly::EventBase> mock_eb;
+
     };
 }

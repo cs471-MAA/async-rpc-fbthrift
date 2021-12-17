@@ -11,35 +11,33 @@
 #include <chrono>
 #include "MessageService.h"
 
-using mock_message_board::MockDatabaseAsyncClient;
-using mock_message_board::SanitizationServiceAsyncClient;
-
-uint32_t MSGSERV_MOCK_TIMEOUT = 20000;
-uint32_t MSGSERV_SANIT_TIMEOUT = 30000;
 
 void mock_message_board::MessageServiceHandler::find_last_message(MessageResponse& resp, std::unique_ptr<::std::string> client_id, int64_t query_uid) {
     // log and stats
     manager.add_entry(query_uid, get_epoch_time_us());
     M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "find_last_message: client_id=" << *client_id);
 
-    auto search = dbMap.find(std::this_thread::get_id());
-    ::std::string message;
+    // auto search = dbMap.find(std::this_thread::get_id());
+    string message;
     
-    if(search == dbMap.end()){
-        auto *eb = new folly::EventBase();
-        M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "New client for thread ID " << std::this_thread::get_id() << ": sending query: " << (uint64_t)query_uid);
+    // if(search == dbMap.end()){
+    //     // auto *eb = new folly::EventBase();
+    //     M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "New client for thread ID " << std::this_thread::get_id() << ": sending query: " << (uint64_t)query_uid);
 
-        dbMap.insert({std::this_thread::get_id(), newRocketClient<MockDatabaseAsyncClient>(eb, addr1, MSGSERV_MOCK_TIMEOUT)})
-                .first->second->sync_find_last_message(message, *client_id, query_uid);
-    }else{
-        M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "Thread ID " << std::this_thread::get_id() << ": sending query: " << (uint64_t)query_uid);
-        search->second->sync_find_last_message(message, *client_id, query_uid);
+    //     dbMap.insert({std::this_thread::get_id(), newRocketClient<MockDatabaseAsyncClient>(eb.get(), addr1, MSGSERV_MOCK_TIMEOUT)})
+    //             .first->second->sync_find_last_message(message, *client_id, query_uid);
+    // }else{
+    //     M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "Thread ID " << std::this_thread::get_id() << ": sending query: " << (uint64_t)query_uid);
+    //     // search->second->sync_find_last_message(message, *client_id, query_uid);
 
-        // folly::EventBase *eb = dbEbMap[this_thread::get_id()];
-        // auto f = search->second->future_find_last_message(*client_id, query_uid);
-        // eb->loop();
-        // message = f.value();
-    }
+    //     auto f = search->second->future_find_last_message(*client_id, query_uid);
+    //     f.wait();
+    //     message = f.value();
+    // }
+    
+    auto f = mock->future_find_last_message(*client_id, query_uid);
+    f.wait();
+    message = f.value();
 
     // response
     resp.query_uid_ref() = query_uid;
@@ -55,23 +53,26 @@ void mock_message_board::MessageServiceHandler::send_message(StatusResponse& res
     manager.add_entry(query_uid, get_epoch_time_us());
     M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "send_message: client_id=" << *client_id << " | message=" << *message);
 
-    auto search = sanMap.find(std::this_thread::get_id());
+    // auto search = sanMap.find(std::this_thread::get_id());
     bool res = false;
-    if(search == sanMap.end()){
-        auto *eb = new folly::EventBase();
-        M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "New client for thread ID " << std::this_thread::get_id() << ": sending query: " << (uint64_t)query_uid);
+    // if(search == sanMap.end()){
+    //     // auto *eb = new folly::EventBase();
+    //     M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "New client for thread ID " << std::this_thread::get_id() << ": sending query: " << (uint64_t)query_uid);
 
-        res = sanMap.insert({std::this_thread::get_id(), newRocketClient<SanitizationServiceAsyncClient>(eb, addr2, MSGSERV_SANIT_TIMEOUT)})
-        .first->second->sync_sanitize_message(*client_id, *message, query_uid);
-    }else{
-        M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "Thread ID " << std::this_thread::get_id() << ": sending query: " << (uint64_t)query_uid);
-        res = search->second->sync_sanitize_message(*client_id, *message, query_uid);
+    //     res = sanMap.insert({std::this_thread::get_id(), newRocketClient<SanitizationServiceAsyncClient>(eb.get(), addr2, MSGSERV_SANIT_TIMEOUT)})
+    //     .first->second->sync_sanitize_message(*client_id, *message, query_uid);
+    // }else{
+    //     M_DEBUG_OUT(MESSAGE_SERVICE_PREFIX << "Thread ID " << std::this_thread::get_id() << ": sending query: " << (uint64_t)query_uid);
+    //     // res = search->second->sync_sanitize_message(*client_id, *message, query_uid);
 
-        // folly::EventBase *eb = sanEbMap[this_thread::get_id()];
-        // auto f = search->second->future_sanitize_message(*client_id, *message, query_uid);
-        // eb->loop();
-        // res = f.value();
-    }
+    //     auto f = search->second->future_sanitize_message(*client_id, *message, query_uid);
+    //     f.wait();
+    //     res = f.value();
+    // }
+
+    auto f = sanit->future_sanitize_message(*client_id, *message, query_uid);
+    f.wait();
+    res = f.value();
 
     // response
     resp.ok_ref() = res;

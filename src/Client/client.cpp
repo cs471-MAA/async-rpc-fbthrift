@@ -67,7 +67,8 @@ int main(int argc, char *argv[]) {
     iterations = (iterations > 0) ? iterations : 10;
     string client_id = (argc > ++i) ? argv[i] : "Albert";
     string message = (argc > ++i) ? argv[i] : "TEST MESSAGE";
-    chrono::microseconds waiting_time = ((argc > ++i) ? stoi(argv[i]) : 10000)*1us;
+    float waiting_time = ((argc > ++i) ? stof(argv[i]) : 10000.f);
+    float decreasing_factor = ((argc > ++i) ? stof(argv[i]) : 1.f);
     uint32_t timeout = (argc > ++i) ? stoi(argv[i]) : 90000; //ms
 
     // ======================= CLIENT SETUP ======================= //
@@ -87,7 +88,8 @@ int main(int argc, char *argv[]) {
     
     std::thread ebloop_thread([](shared_ptr<folly::EventBase> eb) {
             eb.get()->loopForever();
-        }, eb); 
+        }, eb);
+    ebloop_thread.detach();
 
     sigint_catcher(int_handler);
     std::vector<folly::Future<folly::Unit>> futs;
@@ -118,7 +120,9 @@ int main(int argc, char *argv[]) {
         auto end = std::chrono::system_clock::now();
         std::chrono::duration<double> elapsed_seconds = end - start;
         M_DEBUG_OUT(CLIENT_PREFIX << "sent call " << i << " at " << elapsed_seconds.count() << "s");
-        this_thread::sleep_for(waiting_time);
+        this_thread::sleep_for(waiting_time*1us);
+        waiting_time *= decreasing_factor;
+        M_DEBUG_OUT(waiting_time)
     }
         
     auto f = std::move(collectAll(futs.begin(), futs.end())).via(&executor).thenValue([&eb](std::vector<folly::Try<folly::Unit>> &&v) {
@@ -127,7 +131,7 @@ int main(int argc, char *argv[]) {
     });
 
     f.wait();
-    // ebloop_thread.detach();
+    
 
 
     // ======================= SUMMARY ======================= //

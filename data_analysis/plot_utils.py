@@ -72,7 +72,8 @@ for client_uid, queries in all:
     
     # if df.end_client.isnull().values.any():
     #     continue
-    
+    if client_uid == 0:
+        continue
     
     # print(df)
     # plt.figure()
@@ -90,6 +91,7 @@ for client_uid, queries in all:
     plot_trace(df.start_sanit, df.end_sanit, df.query_index, color="#bdb21c", label="Sanitize Service", w=w*0.5)
 
     plot_trace(df.start_mock, df.end_mock, df.query_index, color="#a12810", label="Mock database", w=w*0.25)
+
     print(df)
     print(f'{df.start_client[0]=} | {df.end_client[0]=} || ')
     print(f'{df.start_msg[0]=} | {df.end_msg[0]=} ||')

@@ -36,11 +36,12 @@ int main(int argc, char *argv[]) {
     int i = 0;
     int iothreads = (argc > ++i) ? stoi(argv[i]) : 0;
     int cputhreads = (argc > ++i) ? stoi(argv[i]) : 0;
+    std::chrono::microseconds waiting_time = ((argc > ++i) ? stoi(argv[i]) : 5000) * 1us;
 
     // ======================= SERVER SETUP ======================= //
     
     folly::SocketAddress addr = M_GET_SOCKET_ADDRESS("mock-database", 10001);
-    auto service_handler = std::make_shared<MockDatabaseHandler>();
+    auto service_handler = std::make_shared<MockDatabaseHandler>(waiting_time);
     manager = &(service_handler->manager);
     auto server = newServer(addr, service_handler);
     

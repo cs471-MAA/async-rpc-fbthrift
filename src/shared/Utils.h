@@ -7,7 +7,7 @@
 #include <folly/io/async/AsyncSocket.h>
 #include <folly/Unit.h>
 #include <thrift/lib/cpp2/server/ThriftServer.h>
-#include <thrift/lib/cpp2/async/RocketClientChannel.h>
+#include <thrift/lib/cpp2/async/HeaderClientChannel.h>
 #include <dep/if/gen-cpp2/MockDatabase.h>
 #include <dep/if/gen-cpp2/SanitizationService.h>
 #include <dep/if/gen-cpp2/MessageService.h>
@@ -25,7 +25,7 @@
 
 using folly::AsyncSocket;
 using apache::thrift::ThriftServer;
-using apache::thrift::RocketClientChannel;
+using apache::thrift::HeaderClientChannel;
 using apache::thrift::ThriftServerAsyncProcessorFactory;
 using mock_message_board::MockDatabaseAsyncClient;
 using mock_message_board::SanitizationServiceAsyncClient;
@@ -83,9 +83,9 @@ void sigint_catcher(void (*handler)(int));
 
 template <class T>
 std::unique_ptr<T> newRocketClient(folly::EventBase *evb, folly::SocketAddress const &addr, uint32_t timeout = 60000) {
-    auto channel = RocketClientChannel::newChannel(folly::AsyncSocket::newSocket(evb, addr));
-    channel->setTimeout(timeout);
-    channel->setProtocolId(apache::thrift::protocol::T_COMPACT_PROTOCOL);
+    auto channel = HeaderClientChannel::newChannel(folly::AsyncSocket::newSocket(evb, addr));
+    // channel->setTimeout(timeout);
+    channel->setTimeout(0);
     return std::make_unique<T>(std::move(channel));
 }
 
@@ -95,7 +95,8 @@ std::unique_ptr<ThriftServer> newServer(folly::SocketAddress const &addr, shared
     auto server = std::make_unique<ThriftServer>();
     server->setAddress(addr);
     server->setProcessorFactory(proc_factory);
-    server->setSocketWriteTimeout(8000ms);
+    // server->setSocketWriteTimeout(8000ms);
+    server->setSocketWriteTimeout(0ms);
     
     return server;
 }

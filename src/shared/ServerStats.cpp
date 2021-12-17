@@ -134,7 +134,7 @@ void dump_matrix(const string& filename,
 
     void ServerStatsManager::add_entry(uint64_t query_id, uint64_t epoch_time_ms){
         if (entry_cursor >= entry_count){
-            dump_server_stats();
+            // dump_server_stats();
             entry_cursor = 0;
             active_buffer = (active_buffer + 1) % buffer_count;    
         }
